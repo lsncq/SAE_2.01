@@ -9,6 +9,7 @@ Le mouton mange toujours ce qu'il y a sur la case où il s'arrête :
 - 🌱 **Herbe** : vitesse = 2
 - 🌵 **Cactus** : vitesse = 1
 - 🌼 **Marguerite** : vitesse = 4
+
 Le loup ne peut pas sortir du labyrinthe. Il gagne s'il attrape le mouton.
 Le mouton gagne s'il sort du labyrinthe sans se faire attraper par le loup.
 Tous les deux ont une vision de 5 cases (distance de Manhattan)
