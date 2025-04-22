@@ -23,11 +23,14 @@ Tous les deux ont une vision de 5 cases (distance de Manhattan)
 
 ## 🚀 Comment jouer ?
 1. Cloner le projet :
-```
+'''
 git clone https://github.com/lsncq/SAE_2.01.git 
 '''
 3. Compilez le projet avec Maven ou depuis votre IDE
-4. Lancer l'exécutable .jar : java -jar SAE_2.01.jar
+4. Lancer l'exécutable .jar :
+'''
+java -jar SAE_2.01.jar
+'''
 
 ## ✅ Tests
 Les principales méthodes sont testées avec JUnit. Exécuter les tests avec : mvn test
