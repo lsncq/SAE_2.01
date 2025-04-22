@@ -1,6 +1,7 @@
 package org.example.demo;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -18,6 +19,11 @@ public class Simulation extends Application {
     }
 
     public static void main(String[] args) {
+        Plateau plateau = new Plateau(5,5);
+        plateau.setCaseFinal(plateau.getCase(4,3));
+        System.out.println(plateau);
+        System.out.println(plateau.verifier());
+
         launch();
     }
 }
