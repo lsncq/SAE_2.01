@@ -26,21 +26,17 @@ Tous les deux ont une vision de 5 cases (distance de Manhattan)
 ```
 git clone https://github.com/lsncq/SAE_2.01.git
 ```
-
-Compiler et exécuter le projet :
+2. Compiler le projet avec Maven ou votre IDE
+3. Lancer l'exécutable .jar :
 ```
-cd SAE_2.01
 java -jar SAE_2.01.jar
 ```
 
 ## ✅ Tests 
-Lancer les tests avec Maven ou votre IDE :
+Les principales méthodes sont testées avec JUnit. Exécuter les tests avec :
 ```
 mvn test
 ```
-
-## ✅ Tests
-Les principales méthodes sont testées avec JUnit. Exécuter les tests avec : mvn test
 
 ## 👥 Equipe
 STIEVENARD Kilian - Développeur principal
