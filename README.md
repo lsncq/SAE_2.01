@@ -39,10 +39,10 @@ mvn test
 ```
 
 ## 👥 Equipe
-STIEVENARD Kilian - Développeur principal
-SENOCQ Louis - Designer UX/UI
-LEWANDOWSKI--BRY Enzo 
-DEPARIS Corentin
+- STIEVENARD KILIAN : Développeur Java/JavaFX
+- SENOCQ Louis : Développeur JavaFX / Designer UX/UI
+- LEWANDWSKI--BRY Enzo :
+- DEPARIS Corentin :
 
 ## 📃 Licence
 Ce projet à été réalisé dans le cadre d'un projet universitaire en BUT Informatique. Tout droit à l'Université Polytechnique des Hauts-de-France, IUT de Maubeuge.
