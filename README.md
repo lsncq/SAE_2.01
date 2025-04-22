@@ -1,4 +1,4 @@
-# SAE_2.01 - Développement d'une application - Mange moi si tu peux !
+# SAE_2.01 - Mange moi si tu peux !
 
 ## 👾 Présentation
 Ce projet Java/JavaFX simule un jeu où un mouton tente de fuir un loup à travers un labyrinthe rempli de végétation.
@@ -22,7 +22,7 @@ Tous les deux ont une vision de 5 cases (distance de Manhattan)
 - Fin de la partie lorsqu'un des animaux atteint son objectif
 
 ## 🚀 Comment jouer ?
-1. Cloner le projet : git clone https://github.com/lsncq/SAE_2.01.git
+1. Cloner le projet : '''bash git clone https://github.com/lsncq/SAE_2.01.git'''
 2. Compilez le projet avec Maven ou depuis votre IDE
 3. Lancer l'exécutable .jar : java -jar SAE_2.01.jar
 
@@ -36,4 +36,4 @@ LEWANDOWSKI--BRY Enzo
 DEPARIS Corentin
 
 ## 📃 Licence
-Ce projet à été réalisé dans le cadre d'un projet universitaire en BUT Informatique. Tout droit à l'Université Polytechnique des Hauts-de-France.
+Ce projet à été réalisé dans le cadre d'un projet universitaire en BUT Informatique. Tout droit à l'Université Polytechnique des Hauts-de-France, IUT de Maubeuge.
