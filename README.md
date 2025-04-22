@@ -22,7 +22,7 @@ Tous les deux ont une vision de 5 cases (distance de Manhattan)
 - Fin de la partie lorsqu'un des animaux atteint son objectif
 
 ## 🚀 Comment jouer ?
-1. Cloner le projet : '''bash git clone https://github.com/lsncq/SAE_2.01.git'''
+1. Cloner le projet : ''' bash git clone https://github.com/lsncq/SAE_2.01.git '''
 2. Compilez le projet avec Maven ou depuis votre IDE
 3. Lancer l'exécutable .jar : java -jar SAE_2.01.jar
 
