@@ -40,9 +40,10 @@ mvn test
 
 ## 👥 Equipe
 - STIEVENARD KILIAN : Développeur Java/JavaFX
-- SENOCQ Louis : Développeur JavaFX / Designer UX/UI
-- LEWANDWSKI--BRY Enzo :
+- SENOCQ Louis : Développeur JavaFX / Graphiste UX/UI
+- LEWANDWSKI--BRY Enzo : Graphiste UX/UI
 - DEPARIS Corentin :
 
-## 📃 Licence
+## 📃 Droits
+Les éléments présents graphiques présents dans le jeu ont été entièrement dessinés par notre équipe, donc sont libres de droit.
 Ce projet à été réalisé dans le cadre d'un projet universitaire en BUT Informatique. Tout droit à l'Université Polytechnique des Hauts-de-France, IUT de Maubeuge.
