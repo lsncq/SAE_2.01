@@ -1,6 +1,7 @@
 package org.example.demo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Plateau {
 
@@ -12,6 +13,7 @@ public class Plateau {
     public Plateau() {
         this(3,3);
     }
+
     public Plateau(int nbX, int nbY) {
         this.cases = new Case[nbX][nbY];
         for (int i = 0; i < nbX; i++) {
@@ -40,6 +42,14 @@ public class Plateau {
                     casesPossible.add(value);
                 }
             }
+        }
+        return casesPossible;
+    }
+
+    public ArrayList<Case> getCases() {
+        ArrayList<Case> casesPossible = new ArrayList<>();
+        for (Case[] aCase : cases) {
+            Collections.addAll(casesPossible, aCase);
         }
         return casesPossible;
     }
@@ -82,13 +92,18 @@ public class Plateau {
             }
             System.out.println();
         }
-        return "\nCase Finale : "+caseFinal.toString();
-        /*fdffg*/
-
+        return "\nCase Final : "+caseFinal.toString();
     }
 
     public Mouton getMouton(){
         return mouton;
+    }
+
+    public int length(){
+        return cases.length;
+    }
+    public int height(){
+        return cases[0].length;
     }
 
 }
