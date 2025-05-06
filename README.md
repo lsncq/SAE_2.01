@@ -1,4 +1,4 @@
-# SAE_2.01 - Mange moi si tu peux !
+# SAÉ_2.01 - Mange moi si tu peux !
 
 ## 👾 Présentation
 Ce projet Java/JavaFX simule un jeu où un mouton tente de fuir un loup à travers un labyrinthe rempli de végétation.
