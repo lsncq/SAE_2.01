@@ -6,9 +6,11 @@ public class Plateau {
 
     private Case[][] cases;
     private Case caseFinal;
+    private Mouton mouton;
+    private Loup loup;
 
     public Plateau() {
-        this.cases = new Case[3][3];
+        this(3,3);
     }
     public Plateau(int nbX, int nbY) {
         this.cases = new Case[nbX][nbY];
@@ -21,6 +23,8 @@ public class Plateau {
                 else cases[i][j] = new Case(this, i,j,Element.Herbe);
             }
         }
+        this.mouton = new Mouton(this);
+        this.loup = new Loup(this);
     }
 
     public void setCaseFinal(Case caseFinal) {
@@ -28,7 +32,7 @@ public class Plateau {
         this.caseFinal.setType(Element.Herbe);
     }
 
-    private ArrayList<Case> getCasesPossible() {
+    public ArrayList<Case> getCasesPossible() {
         ArrayList<Case> casesPossible = new ArrayList<>();
         for (Case[] aCase : cases) {
             for (Case value : aCase) {
@@ -40,16 +44,16 @@ public class Plateau {
         return casesPossible;
     }
 
-    private boolean pep(){
+    private boolean pel(){
         ArrayList<Case> lesCases = new ArrayList<>();
-        ArrayList<Case> pile = new ArrayList<>();
-        pile.add(caseFinal);
-        while(!pile.isEmpty()){
-            Case currentCase = pile.remove(0);
+        ArrayList<Case> file = new ArrayList<>();
+        file.add(caseFinal);
+        while(!file.isEmpty()){
+            Case currentCase = file.remove(0);
             lesCases.add(currentCase);
             ArrayList<Case> voisin = currentCase.voisin();
             voisin.removeAll(lesCases);
-            pile.addAll(voisin);
+            file.addAll(voisin);
         }
         ArrayList<Case> verif = getCasesPossible();
         verif.removeAll(lesCases);
@@ -60,7 +64,7 @@ public class Plateau {
         if (caseFinal==null){
             return false;
         }
-        return pep();
+        return pel();
 
     }
 
@@ -79,6 +83,10 @@ public class Plateau {
             System.out.println();
         }
         return "\nCase Final : "+caseFinal.toString();
+    }
+
+    public Mouton getMouton(){
+        return mouton;
     }
 
 }

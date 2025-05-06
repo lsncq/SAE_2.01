@@ -13,7 +13,7 @@ public abstract class Animal {
         this.y = y;
     }
 
-    public abstract void mange();
+    public abstract boolean mange();
 
     public void setNbCase(int nbCase) {
         this.nbCase = nbCase;
