@@ -29,6 +29,7 @@ public class Simulation extends Application {
         Scene scene = new Scene(root,1600,800);
         stage.setTitle("Mange Moi si tu peux !");
 
+
         stage.setScene(scene);
 
         PlateauGUI p = new PlateauGUI(plateau,root);
