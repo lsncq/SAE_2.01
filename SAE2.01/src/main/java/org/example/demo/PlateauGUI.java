@@ -2,6 +2,7 @@ package org.example.demo;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -35,6 +36,9 @@ public class PlateauGUI {
     public void displayAnimal() {
         int x = plateau.getMouton().getX();
         int y = plateau.getMouton().getY();
+
+
+        gridPane.add(image(new Image(Objects.requireNonNull(getClass().getResource("/mouton.png")).toExternalForm())), x, y);
     }
 
     public void show() {
