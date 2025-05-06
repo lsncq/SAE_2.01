@@ -82,7 +82,9 @@ public class Plateau {
             }
             System.out.println();
         }
-        return "\nCase Final : "+caseFinal.toString();
+        return "\nCase Finale : "+caseFinal.toString();
+        /*fdffg*/
+
     }
 
     public Mouton getMouton(){
