@@ -49,13 +49,17 @@ public class Plateau {
         return casesPossible;
     }
 
-    public ArrayList<Case> DeplacePossible(int x, int y, int m) {
+    public ArrayList<Case> deplacePossible(int x, int y, int m) {
         HashSet<Case> casesPossible = new HashSet<>();
+        HashSet<Case> voisins = new HashSet<>();
         casesPossible.add(cases[x][y]);
+        System.out.println(m);
         for (int i=0 ; i < m ; i++){
             for (Case value : casesPossible) {
-                casesPossible.addAll(value.voisin());
+                System.out.println(value.voisin());
+                voisins.addAll(value.voisin());
             }
+            casesPossible.addAll(voisins);
         }
         return new ArrayList<>(casesPossible);
     }

@@ -3,20 +3,14 @@ package org.example.demo;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
+import javafx.scene.shape.Shape;
 
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -64,6 +58,7 @@ public class PlateauGUI {
         }
         gridPane.getChildren().remove(supprime);
         gridPane.add(ancienElementMouton,ancienPosMouton[0],ancienPosMouton[1]);
+        plateau.getMouton().mange();
         for (Node node : gridPane.getChildren()) {
             if (GridPane.getColumnIndex(node) != null && GridPane.getColumnIndex(node) == x && GridPane.getRowIndex(node) == y) {
 
@@ -107,6 +102,28 @@ public class PlateauGUI {
 
     }
 
+    public void displayMouton(){
+        deplacement(plateau.deplacePossible(plateau.getMouton().getX(), plateau.getMouton().getY(),plateau.getMouton().getNbCase()));
+    }
+
+    public void displayLoup(){
+        deplacement(plateau.deplacePossible(plateau.getLoup().getX(),plateau.getLoup().getY(),plateau.getLoup().getNbCase()));
+    }
+
+
+    private void deplacement(ArrayList<Case> cases) {
+        for (Case c : cases) {
+            Circle grandCercle = new Circle(30, 30, 30);
+            // Créer le trou central
+            Circle trou = new Circle(30, 30, 26);
+
+            // Soustraire le trou du grand cercle pour créer un anneau
+            Shape anneau = Shape.subtract(grandCercle, trou);
+            anneau.setFill(Color.rgb(255, 0, 255, 0.5));
+            gridPane.add(anneau, c.getX(), c.getY());
+        }
+    }
+
     public void show() {
         gridPane.setHgap(0);
         gridPane.setVgap(0);
@@ -114,20 +131,20 @@ public class PlateauGUI {
         gridPane.setPadding(new Insets(25, 25, 25, 25));
         gridPane.setGridLinesVisible(true);
 
-        for (Case c : plateau.getCases()){
+        for (Case c : plateau.getCases()) {
             Element e = c.getType();
-            if(e.equals(Element.Cactus)){
+            if (e.equals(Element.Cactus)) {
                 Image i = new Image(Objects.requireNonNull(getClass().getResource("/cactus.png")).toExternalForm());
-                gridPane.add(image(i),c.getX(),c.getY());
+                gridPane.add(image(i), c.getX(), c.getY());
             } else if (e.equals(Element.Herbe)) {
                 Image i = new Image(Objects.requireNonNull(getClass().getResource("/herbe.png")).toExternalForm());
-                gridPane.add(image(i),c.getX(),c.getY());
+                gridPane.add(image(i), c.getX(), c.getY());
             } else if (e.equals(Element.Marguerite)) {
                 Image i = new Image(Objects.requireNonNull(getClass().getResource("/margueritte.png")).toExternalForm());
-                gridPane.add(image(i),c.getX(),c.getY());
-            } else if(e.equals(Element.Roche)){
+                gridPane.add(image(i), c.getX(), c.getY());
+            } else if (e.equals(Element.Roche)) {
                 Image i = new Image(Objects.requireNonNull(getClass().getResource("/rocher.png")).toExternalForm());
-                gridPane.add(image(i),c.getX(),c.getY());
+                gridPane.add(image(i), c.getX(), c.getY());
             }
         }
         stackPane.getChildren().add(gridPane);

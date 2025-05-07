@@ -35,9 +35,10 @@ public class Simulation extends Application {
         PlateauGUI p = new PlateauGUI(plateau,root);
         p.show();
         p.displayAnimal();
-        plateau.getMouton().deplace(1,1);
+        plateau.getMouton().deplace(5,5);
         plateau.getLoup().deplace(2,2);
         p.displayAnimal();
+        p.displayMouton();
 
 
 
