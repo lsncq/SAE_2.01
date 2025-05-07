@@ -33,6 +33,7 @@ public class SimulationCorentin extends Application {
 
 
 
+
         FXMLLoader fxmlLoader = new FXMLLoader(Simulation.class.getResource("simul.fxml"));
 
         Scene scene = new Scene(root, 700, 500);
