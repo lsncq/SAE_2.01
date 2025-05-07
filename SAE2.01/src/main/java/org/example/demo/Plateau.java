@@ -2,6 +2,7 @@ package org.example.demo;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
 public class Plateau {
 
@@ -28,7 +29,7 @@ public class Plateau {
         this.mouton = new Mouton(this);
         mouton.deplace(0,0);
         this.loup = new Loup(this);
-        loup.deplace(0,0);
+        loup.deplace(1,0);
     }
 
     public void setCaseFinal(Case caseFinal) {
@@ -46,6 +47,17 @@ public class Plateau {
             }
         }
         return casesPossible;
+    }
+
+    public ArrayList<Case> DeplacePossible(int x, int y, int m) {
+        HashSet<Case> casesPossible = new HashSet<>();
+        casesPossible.add(cases[x][y]);
+        for (int i=0 ; i < m ; i++){
+            for (Case value : casesPossible) {
+                casesPossible.addAll(value.voisin());
+            }
+        }
+        return new ArrayList<>(casesPossible);
     }
 
     public ArrayList<Case> getCases() {
@@ -100,6 +112,7 @@ public class Plateau {
     public Mouton getMouton(){
         return mouton;
     }
+    public Loup getLoup(){return loup;}
 
     public int length(){
         return cases.length;

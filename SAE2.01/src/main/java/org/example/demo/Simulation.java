@@ -16,7 +16,7 @@ public class Simulation extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        Plateau plateau = new Plateau(10,5);
+        Plateau plateau = new Plateau(20,10);
         plateau.setCaseFinal(plateau.getCase(4,3));
         System.out.println(plateau);
         System.out.println(plateau.verifier());
@@ -35,6 +35,11 @@ public class Simulation extends Application {
         PlateauGUI p = new PlateauGUI(plateau,root);
         p.show();
         p.displayAnimal();
+        plateau.getMouton().deplace(1,1);
+        plateau.getLoup().deplace(2,2);
+        p.displayAnimal();
+
+
 
 
         stage.show();
