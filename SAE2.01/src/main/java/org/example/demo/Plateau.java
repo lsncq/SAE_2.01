@@ -26,7 +26,9 @@ public class Plateau {
             }
         }
         this.mouton = new Mouton(this);
+        mouton.deplace(0,0);
         this.loup = new Loup(this);
+        loup.deplace(0,0);
     }
 
     public void setCaseFinal(Case caseFinal) {

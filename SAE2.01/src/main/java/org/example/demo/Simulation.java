@@ -34,6 +34,7 @@ public class Simulation extends Application {
 
         PlateauGUI p = new PlateauGUI(plateau,root);
         p.show();
+        p.displayAnimal();
 
 
         stage.show();

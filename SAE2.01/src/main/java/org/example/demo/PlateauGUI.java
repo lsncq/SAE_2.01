@@ -28,7 +28,7 @@ public class PlateauGUI {
 
     private ImageView image(Image image) {
         ImageView view = new ImageView(image);
-        view.setFitWidth((stackPane.getWidth()-25)/plateau.length());   // largeur en pixels
+        view.setFitWidth((stackPane.getWidth()/1.3)/plateau.length());   // largeur en pixels
         view.setFitHeight((stackPane.getHeight()/1.3)/(plateau.height())); // longueur en pixels
         return view;
     }
@@ -36,7 +36,6 @@ public class PlateauGUI {
     public void displayAnimal() {
         int x = plateau.getMouton().getX();
         int y = plateau.getMouton().getY();
-
 
         gridPane.add(image(new Image(Objects.requireNonNull(getClass().getResource("/mouton.png")).toExternalForm())), x, y);
     }
