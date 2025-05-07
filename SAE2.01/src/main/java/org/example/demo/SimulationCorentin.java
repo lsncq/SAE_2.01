@@ -26,8 +26,31 @@ public class SimulationCorentin extends Application {
         tf.setStyle("-fx-text-fill: white;");
         tf.setFont(new Font("Impact", 40));
 
-        Button btn1 = new Button("jouer");
-        Button btn2 = new Button("règles du jeu");
+        Button btn1 = new Button("JOUER");
+        Button btn2 = new Button("REGLES DU JEU");
+
+        btn1.setPrefSize(200, 60);
+        btn1.setStyle(
+                "-fx-background-size: cover;" +
+                        "-fx-text-fill: #5c3b00;" +
+                        "-fx-font-size: 18px;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-background-radius: 30;" +
+                        "-fx-border-radius: 30;" +
+                        "-fx-padding: 10 20 10 20;"
+        );
+
+        btn2.setPrefSize(200, 60);
+        btn2.setStyle(
+                "-fx-background-size: cover;" +
+                        "-fx-text-fill: #5c3b00;" +
+                        "-fx-font-size: 18px;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-background-radius: 30;" +
+                        "-fx-border-radius: 30;" +
+                        "-fx-padding: 10 20 10 20;"
+        );
+
         VBox vbox = new VBox(btn1);
         VBox vbox2 = new VBox(btn2);
 
@@ -36,13 +59,13 @@ public class SimulationCorentin extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(Simulation.class.getResource("simul.fxml"));
 
-        Scene scene = new Scene(root, 700, 500);
+        Scene scene = new Scene(root, 1600, 800);
 
-        vbox.setTranslateX(scene.getWidth()/2);
+        vbox.setTranslateX(scene.getWidth()/2-100);
         vbox.setTranslateY(scene.getHeight()-scene.getHeight()/2.5);
 
-        vbox2.setTranslateX(scene.getWidth()/2);
-        vbox2.setTranslateY(scene.getHeight()-scene.getHeight()/3);
+        vbox2.setTranslateX(scene.getWidth()/2-100);
+        vbox2.setTranslateY(scene.getHeight()-scene.getHeight()/4);
 
         root.getChildren().addAll(tf,vbox,vbox2);
 
