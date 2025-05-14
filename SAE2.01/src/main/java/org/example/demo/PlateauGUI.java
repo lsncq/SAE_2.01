@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -42,6 +43,7 @@ public class PlateauGUI {
         ImageView view = new ImageView(image);
         view.setFitWidth((stackPane.getWidth()/1.3)/plateau.length());   // largeur en pixels
         view.setFitHeight((stackPane.getHeight()/1.3)/(plateau.height())); // longueur en pixels
+
         return view;
     }
 
@@ -135,16 +137,36 @@ public class PlateauGUI {
             Element e = c.getType();
             if (e.equals(Element.Cactus)) {
                 Image i = new Image(Objects.requireNonNull(getClass().getResource("/cactus.png")).toExternalForm());
-                gridPane.add(image(i), c.getX(), c.getY());
+                //
+                ImageView ibis = image(i);
+                ibis.setOnMouseClicked(mouseEvent -> {ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocher.png")).toExternalForm()));
+                    System.out.println("x="+c.getX()+" y="+c.getY());
+                });
+                gridPane.add(ibis, c.getX(), c.getY());
+                //
             } else if (e.equals(Element.Herbe)) {
                 Image i = new Image(Objects.requireNonNull(getClass().getResource("/herbe.png")).toExternalForm());
-                gridPane.add(image(i), c.getX(), c.getY());
+                //
+                ImageView ibis = image(i);
+                ibis.setOnMouseClicked(mouseEvent -> {ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocher.png")).toExternalForm()));
+                    System.out.println("x="+c.getX()+" y="+c.getY());
+                });
+                gridPane.add(ibis, c.getX(), c.getY());
+                //
             } else if (e.equals(Element.Marguerite)) {
                 Image i = new Image(Objects.requireNonNull(getClass().getResource("/margueritte.png")).toExternalForm());
-                gridPane.add(image(i), c.getX(), c.getY());
+                //
+                ImageView ibis = image(i);
+                ibis.setOnMouseClicked(mouseEvent -> {ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocher.png")).toExternalForm()));
+                    System.out.println("x="+c.getX()+" y="+c.getY());
+                });
+                gridPane.add(ibis, c.getX(), c.getY());
+                //
             } else if (e.equals(Element.Roche)) {
                 Image i = new Image(Objects.requireNonNull(getClass().getResource("/rocher.png")).toExternalForm());
+
                 gridPane.add(image(i), c.getX(), c.getY());
+
             }
         }
         stackPane.getChildren().add(gridPane);
