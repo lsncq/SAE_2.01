@@ -124,5 +124,7 @@ public class Plateau {
     public int height(){
         return cases[0].length;
     }
-
+    public Case getCaseFinal() {
+        return caseFinal;
+    }
 }
