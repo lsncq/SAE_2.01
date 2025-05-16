@@ -146,41 +146,39 @@ public class PlateauGUI {
             ibis = image(i);}
         //
         ibis.setOnMouseClicked(mouseEvent -> {
-            if (lequel == 1 && !(c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0)){
-                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
-                plateau.getCase(c.getX(),c.getY()).setType(Element.Roche);
-            }else if(lequel == 2 && !(c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0)){
-                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
-                plateau.getCase(c.getX(),c.getY()).setType(Element.Herbe);
-            }else if(lequel == 3 && !(c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0)){
-                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/cactusv2.png")).toExternalForm()));
-                plateau.getCase(c.getX(),c.getY()).setType(Element.Cactus);
-            }else if(lequel == 4 && !(c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0)) {
-                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/margueritev2.png")).toExternalForm()));
-                plateau.getCase(c.getX(), c.getY()).setType(Element.Marguerite);
+            if (lequel < 5 && !(c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0)){
+                if (lequel == 1){
+                    ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
+                    plateau.getCase(c.getX(),c.getY()).setType(Element.Roche);
+                }else if(lequel == 2 ){
+                    ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
+                    plateau.getCase(c.getX(),c.getY()).setType(Element.Herbe);
+                }else if(lequel == 3 ){
+                    ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/cactusv2.png")).toExternalForm()));
+                    plateau.getCase(c.getX(),c.getY()).setType(Element.Cactus);
+                }else if(lequel == 4) {
+                    ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/margueritev2.png")).toExternalForm()));
+                    plateau.getCase(c.getX(), c.getY()).setType(Element.Marguerite);
+                }
             }else if(lequel == 5 && (c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0))  {
                 ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
-
                 plateau.getCaseFinal().setType(Element.Roche);
                 if (!plateau.getCaseFinal().equals(c)){
                     choisi(plateau.getCaseFinal());
                 }
+
                 plateau.getCase(c.getX(), c.getY()).setType(Element.Herbe);
-
-
-
                 plateau.setCaseFinal(c);
             }
             else if (c.equals(plateau.getCaseFinal())){
                 ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
                 plateau.getCase(c.getX(),c.getY()).setType(Element.Roche);
-            } else if (lequel == 6 ) {
+            } else if (lequel == 6 && c.getType() != Element.Roche) {
                 plateau.getMouton().deplace(c.getX(),c.getY());
                 displayAnimal();
-            } else if (lequel == 7) {
+            } else if (lequel == 7 && c.getType() != Element.Roche) {
                 plateau.getLoup().deplace(c.getX(),c.getY());
-                displayLoup();
-
+                displayAnimal();
             }
         });
         gridPane.add(ibis, c.getX(), c.getY());
