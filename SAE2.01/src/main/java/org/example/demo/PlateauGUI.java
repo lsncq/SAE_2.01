@@ -31,8 +31,8 @@ public class PlateauGUI {
         this.plateau = plateau;
         this.stackPane = stackPane;
         gridPane = new GridPane();
-        this.ancienElementLoup = image(new Image(Objects.requireNonNull(getClass().getResource("/herbe.png")).toExternalForm()));
-        this.ancienElementMouton = image(new Image(Objects.requireNonNull(getClass().getResource("/herbe.png")).toExternalForm()));
+        this.ancienElementLoup = image(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
+        this.ancienElementMouton = image(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
         this.ancienPosLoup = new int[2];
         ancienPosLoup[0] = plateau.getLoup().getX();
         ancienPosLoup[1] = plateau.getLoup().getY();
@@ -131,38 +131,38 @@ public class PlateauGUI {
     public void choisi(Case c){
         ImageView ibis ;
         if (c.getType() == Element.Herbe){
-            Image i = new Image(Objects.requireNonNull(getClass().getResource("/herbe.png")).toExternalForm());
+            Image i = new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm());
             ibis = image(i);
         }else if(c.getType() == Element.Cactus){
-            Image i = new Image(Objects.requireNonNull(getClass().getResource("/cactus.png")).toExternalForm());
+            Image i = new Image(Objects.requireNonNull(getClass().getResource("/cactusv2.png")).toExternalForm());
             ibis = image(i);
         }else if(c.getType() == Element.Roche){
-            Image i = new Image(Objects.requireNonNull(getClass().getResource("/rocher.png")).toExternalForm());
+            Image i = new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm());
             ibis = image(i);
         }else if(c.getType() == Element.Marguerite){
-            Image i = new Image(Objects.requireNonNull(getClass().getResource("/margueritte.png")).toExternalForm());
+            Image i = new Image(Objects.requireNonNull(getClass().getResource("/marguerittev2.png")).toExternalForm());
             ibis = image(i);
-        }else { Image i = new Image(Objects.requireNonNull(getClass().getResource("/margueritte.png")).toExternalForm());
+        }else { Image i = new Image(Objects.requireNonNull(getClass().getResource("/marguerittev2.png")).toExternalForm());
             ibis = image(i);}
         //
         ibis.setOnMouseClicked(mouseEvent -> {
             if (c.equals(plateau.getCaseFinal())){
-                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocher.png")).toExternalForm()));
+                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
                 plateau.getCase(c.getX(),c.getY()).setType(Element.Roche);
             } else if (lequel == 1){
-                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocher.png")).toExternalForm()));
+                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
                 plateau.getCase(c.getX(),c.getY()).setType(Element.Roche);
             }else if(lequel == 2){
-                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/herbe.png")).toExternalForm()));
+                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
                 plateau.getCase(c.getX(),c.getY()).setType(Element.Herbe);
             }else if(lequel == 3){
-                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/cactus.png")).toExternalForm()));
+                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/cactusv2.png")).toExternalForm()));
                 plateau.getCase(c.getX(),c.getY()).setType(Element.Cactus);
             }else if(lequel == 4) {
-                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/margueritte.png")).toExternalForm()));
+                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/marguerittev2.png")).toExternalForm()));
                 plateau.getCase(c.getX(), c.getY()).setType(Element.Marguerite);
             }else if(lequel == 5 && (c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0)) {
-                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/herbe.png")).toExternalForm()));
+                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
                 plateau.getCase(c.getX(), c.getY()).setType(Element.Herbe);
                 plateau.getCaseFinal().setType(Element.Roche);
                 choisi(plateau.getCaseFinal());
