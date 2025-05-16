@@ -74,7 +74,7 @@ public class PlateauGUI {
         }
 
         gridPane.getChildren().remove(supprime);
-        ImageView mouton = image(new Image(Objects.requireNonNull(getClass().getResource("/mouton.png")).toExternalForm()));
+        ImageView mouton = image(new Image(Objects.requireNonNull(getClass().getResource("/moutonv2.png")).toExternalForm()));
         gridPane.add(mouton, x, y);
 
         //PARTIE LOUP
@@ -101,7 +101,7 @@ public class PlateauGUI {
         }
 
         gridPane.getChildren().remove(supprime);
-        ImageView loup = image(new Image(Objects.requireNonNull(getClass().getResource("/Loup.png")).toExternalForm()));
+        ImageView loup = image(new Image(Objects.requireNonNull(getClass().getResource("/Loupv2.png")).toExternalForm()));
         gridPane.add(loup, x, y);
 
     }
@@ -218,7 +218,7 @@ public class PlateauGUI {
         marguerite.setFitWidth(50);
         marguerite.setFitHeight(50);
 
-        Image sortiemere = new Image(Objects.requireNonNull(getClass().getResource("/margueritev2.png")).toExternalForm());
+        Image sortiemere = new Image(Objects.requireNonNull(getClass().getResource("/Marteau_piqueur.png")).toExternalForm());
 
         ImageView sortie = new ImageView(sortiemere);
         sortie.setFitWidth(50);
@@ -236,6 +236,39 @@ public class PlateauGUI {
         loup.setFitWidth(50);
         loup.setFitHeight(50);
         Button Valide = new Button("Valide");
+
+        Valide.setPrefSize(200, 60);
+        Valide.setStyle(
+                "-fx-background-size: cover;" +
+                        "-fx-text-fill: #5c3b00;" +
+                        "-fx-font-size: 18px;" +
+                        "-fx-background-color: green;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-background-radius: 30;" +
+                        "-fx-border-radius: 30;" +
+                        "-fx-padding: 10 20 10 20;"
+        );
+        Valide.setOnMouseEntered(e -> Valide.setStyle("-fx-background-color: #0b8329;" +
+                "-fx-background-size: cover;" +
+                "-fx-text-fill: #5c3b00;" +
+                "-fx-font-size: 18px;" +
+                "-fx-font-weight: bold;" +
+                "-fx-background-radius: 30;" +
+                "-fx-border-radius: 30;" +
+                "-fx-padding: 10 20 10 20;"
+        ));
+
+        Valide.setOnMouseExited(e -> Valide.setStyle("-fx-background-size: cover;" +
+                "-fx-text-fill: #5c3b00;" +
+                "-fx-font-size: 18px;" +
+                "-fx-background-color: green;" +
+                "-fx-font-weight: bold;" +
+                "-fx-background-radius: 30;" +
+                "-fx-border-radius: 30;" +
+                "-fx-padding: 10 20 10 20;"
+        ));
+
+
 
 
         roche.setOnMouseClicked(event -> {
@@ -277,10 +310,9 @@ public class PlateauGUI {
         mouton.setTranslateY(100);
         loup.setTranslateX(700);
         loup.setTranslateY(50);
-        Valide.setTranslateX(700);
-        Valide.setTranslateY(0);
+        Valide.setTranslateX(0);
+        Valide.setTranslateY(-300);
 
-        Valide.setDisable(true);
 
 
 
