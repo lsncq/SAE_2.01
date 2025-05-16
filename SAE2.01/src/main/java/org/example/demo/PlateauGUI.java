@@ -194,20 +194,54 @@ public class PlateauGUI {
         gridPane.setPadding(new Insets(25, 25, 25, 25));
         gridPane.setGridLinesVisible(true);
 
+        Image rochemere = new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm());
 
-        Button roche = new Button("Roche");
-        Button herbe = new Button("Herbe");
-        Button cactus = new Button("Cactus");
-        Button marguerite = new Button("Marguerite");
-        Button sortie = new Button("Sortie");
-        Button mouton = new Button("Mouton");
-        Button loup = new Button("Loup");
+        ImageView roche = new ImageView(rochemere);
+        roche.setFitWidth(50);
+        roche.setFitHeight(50);
+        Image herbemere = new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm());
+
+        ImageView herbe = new ImageView(herbemere);
+        herbe.setFitWidth(50);
+        herbe.setFitHeight(50);
+
+        Image cactusmere = new Image(Objects.requireNonNull(getClass().getResource("/cactusv2.png")).toExternalForm());
+
+        ImageView cactus = new ImageView(cactusmere);
+
+        cactus.setFitWidth(50);
+        cactus.setFitHeight(50);
+
+        Image margueritemere = new Image(Objects.requireNonNull(getClass().getResource("/margueritev2.png")).toExternalForm());
+
+        ImageView marguerite = new ImageView(margueritemere);
+        marguerite.setFitWidth(50);
+        marguerite.setFitHeight(50);
+
+        Image sortiemere = new Image(Objects.requireNonNull(getClass().getResource("/margueritev2.png")).toExternalForm());
+
+        ImageView sortie = new ImageView(sortiemere);
+        sortie.setFitWidth(50);
+        sortie.setFitHeight(50);
+
+        Image moutonmere = new Image(Objects.requireNonNull(getClass().getResource("/moutonv2.png")).toExternalForm());
+
+        ImageView mouton = new ImageView(moutonmere);
+        mouton.setFitWidth(50);
+        mouton.setFitHeight(50);
+
+        Image loupmere = new Image(Objects.requireNonNull(getClass().getResource("/loupv2.png")).toExternalForm());
+
+        ImageView loup = new ImageView(loupmere);
+        loup.setFitWidth(50);
+        loup.setFitHeight(50);
         Button Valide = new Button("Valide");
 
-        roche.setOnAction(event -> {
+
+        roche.setOnMouseClicked(event -> {
             lequel = 1;
         });
-        herbe.setOnAction(event -> {
+        herbe.setOnMouseClicked(event -> {
             lequel = 2;
         });
         cactus.setOnMouseClicked(event -> {
@@ -232,19 +266,19 @@ public class PlateauGUI {
         roche.setTranslateX(700);
         roche.setTranslateY(350);
         herbe.setTranslateX(700);
-        herbe.setTranslateY(320);
+        herbe.setTranslateY(300);
         cactus.setTranslateX(700);
-        cactus.setTranslateY(290);
+        cactus.setTranslateY(250);
         marguerite.setTranslateX(700);
-        marguerite.setTranslateY(260);
+        marguerite.setTranslateY(200);
         sortie.setTranslateX(700);
-        sortie.setTranslateY(230);
+        sortie.setTranslateY(150);
         mouton.setTranslateX(700);
-        mouton.setTranslateY(200);
+        mouton.setTranslateY(100);
         loup.setTranslateX(700);
-        loup.setTranslateY(170);
+        loup.setTranslateY(50);
         Valide.setTranslateX(700);
-        Valide.setTranslateY(140);
+        Valide.setTranslateY(0);
 
         Valide.setDisable(true);
 
