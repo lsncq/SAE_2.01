@@ -146,29 +146,41 @@ public class PlateauGUI {
             ibis = image(i);}
         //
         ibis.setOnMouseClicked(mouseEvent -> {
-            if (c.equals(plateau.getCaseFinal())){
+            if (lequel == 1 && !(c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0)){
                 ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
                 plateau.getCase(c.getX(),c.getY()).setType(Element.Roche);
-            } else if (lequel == 1){
-                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
-                plateau.getCase(c.getX(),c.getY()).setType(Element.Roche);
-            }else if(lequel == 2){
+            }else if(lequel == 2 && !(c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0)){
                 ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
                 plateau.getCase(c.getX(),c.getY()).setType(Element.Herbe);
-            }else if(lequel == 3){
+            }else if(lequel == 3 && !(c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0)){
                 ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/cactusv2.png")).toExternalForm()));
                 plateau.getCase(c.getX(),c.getY()).setType(Element.Cactus);
-            }else if(lequel == 4) {
-                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/marguerittev2.png")).toExternalForm()));
+            }else if(lequel == 4 && !(c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0)) {
+                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/margueritev2.png")).toExternalForm()));
                 plateau.getCase(c.getX(), c.getY()).setType(Element.Marguerite);
-            }else if(lequel == 5 && (c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0)) {
+            }else if(lequel == 5 && (c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0))  {
                 ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
-                plateau.getCase(c.getX(), c.getY()).setType(Element.Herbe);
+
                 plateau.getCaseFinal().setType(Element.Roche);
-                choisi(plateau.getCaseFinal());
+                if (!plateau.getCaseFinal().equals(c)){
+                    choisi(plateau.getCaseFinal());
+                }
+                plateau.getCase(c.getX(), c.getY()).setType(Element.Herbe);
+
 
 
                 plateau.setCaseFinal(c);
+            }
+            else if (c.equals(plateau.getCaseFinal())){
+                ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
+                plateau.getCase(c.getX(),c.getY()).setType(Element.Roche);
+            } else if (lequel == 6 ) {
+                plateau.getMouton().deplace(c.getX(),c.getY());
+                displayAnimal();
+            } else if (lequel == 7) {
+                plateau.getLoup().deplace(c.getX(),c.getY());
+                displayLoup();
+
             }
         });
         gridPane.add(ibis, c.getX(), c.getY());
@@ -188,6 +200,8 @@ public class PlateauGUI {
         Button cactus = new Button("Cactus");
         Button marguerite = new Button("Marguerite");
         Button sortie = new Button("Sortie");
+        Button mouton = new Button("Mouton");
+        Button loup = new Button("Loup");
 
         roche.setOnAction(event -> {
             lequel = 1;
@@ -202,7 +216,15 @@ public class PlateauGUI {
             lequel = 4;
         });
         sortie.setOnMouseClicked(event -> {
+
             lequel = 5;
+        });
+        mouton.setOnMouseClicked(event -> {
+            lequel = 6;
+        });
+
+        loup.setOnMouseClicked(event -> {
+            lequel = 7;
         });
 
         roche.setTranslateX(700);
@@ -215,6 +237,10 @@ public class PlateauGUI {
         marguerite.setTranslateY(260);
         sortie.setTranslateX(700);
         sortie.setTranslateY(230);
+        mouton.setTranslateX(700);
+        mouton.setTranslateY(200);
+        loup.setTranslateX(700);
+        loup.setTranslateY(170);
 
 
 
@@ -225,7 +251,7 @@ public class PlateauGUI {
             }
 
         stackPane.getChildren().add(gridPane);
-        stackPane.getChildren().addAll(roche,herbe,cactus,marguerite,sortie);
+        stackPane.getChildren().addAll(roche,herbe,cactus,marguerite,sortie,mouton,loup);
 
     }
 
