@@ -140,9 +140,9 @@ public class PlateauGUI {
             Image i = new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm());
             ibis = image(i);
         }else if(c.getType() == Element.Marguerite){
-            Image i = new Image(Objects.requireNonNull(getClass().getResource("/marguerittev2.png")).toExternalForm());
+            Image i = new Image(Objects.requireNonNull(getClass().getResource("/margueritev2.png")).toExternalForm());
             ibis = image(i);
-        }else { Image i = new Image(Objects.requireNonNull(getClass().getResource("/marguerittev2.png")).toExternalForm());
+        }else { Image i = new Image(Objects.requireNonNull(getClass().getResource("/margueritev2.png")).toExternalForm());
             ibis = image(i);}
         //
         ibis.setOnMouseClicked(mouseEvent -> {
@@ -150,6 +150,7 @@ public class PlateauGUI {
                 if (lequel == 1){
                     ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
                     plateau.getCase(c.getX(),c.getY()).setType(Element.Roche);
+                    System.out.println(plateau.verifier());
                 }else if(lequel == 2 ){
                     ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
                     plateau.getCase(c.getX(),c.getY()).setType(Element.Herbe);
@@ -169,6 +170,7 @@ public class PlateauGUI {
 
                 plateau.getCase(c.getX(), c.getY()).setType(Element.Herbe);
                 plateau.setCaseFinal(c);
+                System.out.println(plateau.verifier());
             }
             else if (c.equals(plateau.getCaseFinal())){
                 ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
@@ -200,6 +202,7 @@ public class PlateauGUI {
         Button sortie = new Button("Sortie");
         Button mouton = new Button("Mouton");
         Button loup = new Button("Loup");
+        Button Valide = new Button("Valide");
 
         roche.setOnAction(event -> {
             lequel = 1;
@@ -225,6 +228,7 @@ public class PlateauGUI {
             lequel = 7;
         });
 
+
         roche.setTranslateX(700);
         roche.setTranslateY(350);
         herbe.setTranslateX(700);
@@ -239,6 +243,10 @@ public class PlateauGUI {
         mouton.setTranslateY(200);
         loup.setTranslateX(700);
         loup.setTranslateY(170);
+        Valide.setTranslateX(700);
+        Valide.setTranslateY(140);
+
+        Valide.setDisable(true);
 
 
 
@@ -249,7 +257,7 @@ public class PlateauGUI {
             }
 
         stackPane.getChildren().add(gridPane);
-        stackPane.getChildren().addAll(roche,herbe,cactus,marguerite,sortie,mouton,loup);
+        stackPane.getChildren().addAll(roche,herbe,cactus,marguerite,sortie,mouton,loup,Valide);
 
     }
 

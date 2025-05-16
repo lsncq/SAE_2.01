@@ -3,6 +3,7 @@ package org.example.demo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 
 public class Plateau {
 
@@ -73,18 +74,22 @@ public class Plateau {
     }
 
     private boolean pel(){
-        ArrayList<Case> lesCases = new ArrayList<>();
-        ArrayList<Case> file = new ArrayList<>();
+        LinkedList<Case> lesCases = new LinkedList<>();
+        HashSet<Case> file = new HashSet<>();
         file.add(caseFinal);
-        while(!file.isEmpty()){
-            Case currentCase = file.remove(0);
-            lesCases.add(currentCase);
-            ArrayList<Case> voisin = currentCase.voisin();
-            voisin.removeAll(lesCases);
-            file.addAll(voisin);
+        lesCases.add(caseFinal);
+
+        while (!lesCases.isEmpty()) {
+            Case current = lesCases.poll();
+            for (Case neighbor : current.voisin()) {
+                if (!file.contains(neighbor)) {
+                    lesCases.add(neighbor);
+                    file.add(neighbor);
+                }
+            }
         }
         ArrayList<Case> verif = getCasesPossible();
-        verif.removeAll(lesCases);
+        verif.removeAll(file);
         return verif.isEmpty();
     }
 
