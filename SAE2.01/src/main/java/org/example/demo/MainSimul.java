@@ -1,10 +1,6 @@
 package org.example.demo;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,7 +15,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 
-public class SimulationCorentin extends Application {
+public class MainSimul extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         StackPane root = new StackPane();
@@ -183,7 +179,7 @@ public class SimulationCorentin extends Application {
 
 
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Simulation.class.getResource("simul.fxml"));
+
 
         Scene scene = new Scene(root, 1600, 800);
 
