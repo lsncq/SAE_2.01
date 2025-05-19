@@ -3,9 +3,13 @@ package org.example.demo;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -26,10 +30,12 @@ public class PlateauGUI {
     private int[] ancienPosMouton ;
     private int[] ancienPosLoup ;
     private int lequel;
-    public Button valide;
+    private Button valide;
+    private Scene scene;
 
-    public PlateauGUI(Plateau plateau,StackPane stackPane) {
+    public PlateauGUI(Plateau plateau,StackPane stackPane,Scene scene) {
         this.plateau = plateau;
+        this.scene = scene;
         this.stackPane = stackPane;
         gridPane = new GridPane();
         this.ancienElementLoup = image(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
@@ -50,7 +56,7 @@ public class PlateauGUI {
         return view;
     }
 
-    public void displayAnimal() {
+    public boolean displayAnimal() {
         int x = plateau.getMouton().getX();
         int y = plateau.getMouton().getY();
         //PARTIE MOUTON
@@ -104,29 +110,8 @@ public class PlateauGUI {
         gridPane.getChildren().remove(supprime);
         ImageView loup = image(new Image(Objects.requireNonNull(getClass().getResource("/loupv2.png")).toExternalForm()));
         gridPane.add(loup, x, y);
+        return true;
 
-    }
-
-    public void displayMouton(){
-        deplacement(plateau.deplacePossible(plateau.getMouton().getX(), plateau.getMouton().getY(),plateau.getMouton().getNbCase()));
-    }
-
-    public void displayLoup(){
-        deplacement(plateau.deplacePossible(plateau.getLoup().getX(),plateau.getLoup().getY(),plateau.getLoup().getNbCase()));
-    }
-
-
-    private void deplacement(ArrayList<Case> cases) {
-        for (Case c : cases) {
-            Circle grandCercle = new Circle(30, 30, 30);
-            // Créer le trou central
-            Circle trou = new Circle(30, 30, 26);
-
-            // Soustraire le trou du grand cercle pour créer un anneau
-            Shape anneau = Shape.subtract(grandCercle, trou);
-            anneau.setFill(Color.rgb(255, 0, 255, 0.5));
-            gridPane.add(anneau, c.getX(), c.getY());
-        }
     }
 
     public void choisi(Case c){
@@ -219,7 +204,7 @@ public class PlateauGUI {
         marguerite.setFitWidth(50);
         marguerite.setFitHeight(50);
 
-        Image sortiemere = new Image(Objects.requireNonNull(getClass().getResource("/Marteau_piqueur.png")).toExternalForm());
+        Image sortiemere = new Image(Objects.requireNonNull(getClass().getResource("/marteauv2.png")).toExternalForm());
 
         ImageView sortie = new ImageView(sortiemere);
         sortie.setFitWidth(50);
@@ -334,12 +319,68 @@ public class PlateauGUI {
         displayAnimal();
 
     }
-
-
-    public void jeu(){
-        stackPane.getChildren().clear();
-        stackPane.getChildren().add(gridPane);
+    private void texte(Label l , String animal , int nbPas){
+        l.setText(animal + " : " + nbPas + " pas restant.");
     }
 
+    private void bouge(Animal a, KeyCode k,int nbPas){
+        if (k == KeyCode.UP){
+            if (plateau.getCase(a.getX(),a.getY()-1).getType() != Element.Roche){
+                a.deplace(a.getX(),a.getY()-1);
+                displayAnimal();
+                nbPas -=1;
+            }
+        }else if (k == KeyCode.DOWN){
+            if (plateau.getCase(a.getX(),a.getY()+1).getType() != Element.Roche){
+                a.deplace(a.getX(),a.getY()+1);
+                displayAnimal();
+                nbPas -=1;
+            }
+        }else if (k == KeyCode.LEFT){
+            if (plateau.getCase(a.getX()-1,a.getY()).getType() != Element.Roche){
+                a.deplace(a.getX()-1,a.getY());
+                displayAnimal();
+                nbPas -=1;
+            }
+        }else if (k == KeyCode.RIGHT){
+            if (plateau.getCase(a.getX()+1,a.getY()).getType() != Element.Roche){
+                a.deplace(a.getX()+1,a.getY());
+                displayAnimal();
+                nbPas -=1;
+            }
+        }
+        if (a instanceof Mouton && nbPas == 0){
+            nbPas = a.getNbCase();
+        }else if (a instanceof Loup && nbPas == 0){
+            nbPas = a.getNbCase();
+        }
+    }
+
+    public void jeu() {
+        Image image = new Image(Objects.requireNonNull(getClass().getResource("/background.png")).toExternalForm());
+        ImageView backgroundView = new ImageView(image);
+        backgroundView.setFitWidth(1600);
+        backgroundView.setPreserveRatio(true);
+        Label texte = new Label("Mouton : 3 pas restant.");
+        int nbPas = 3;
+        Mouton m = plateau.getMouton();
+        Loup l = plateau.getLoup();
+        lequel = 10;
+
+
+        stackPane.getChildren().clear();
+        stackPane.getChildren().addAll(backgroundView, gridPane, texte);
+
+
+        scene.setOnKeyPressed(e -> {
+            if (e.getCode().isArrowKey() && lequel ==10 ){
+                bouge(m,e.getCode(),nbPas);
+                texte(texte,m.toString(),nbPas);
+            }else if (e.getCode().isArrowKey() && lequel == 11){
+                bouge(l,e.getCode(),nbPas);
+                texte(texte,l.toString(),nbPas);
+            }
+        });
+    }
 
 }

@@ -33,4 +33,8 @@ public class Loup extends Animal {
         return false;
     }
 
+    public String toString() {
+        return "Loup";
+    }
+
 }

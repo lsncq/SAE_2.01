@@ -20,4 +20,8 @@ public class Mouton extends Animal{
         return true;
     }
 
+    public String toString() {
+        return "Mouton";
+    }
+
 }

@@ -61,8 +61,8 @@ public class MainSimul extends Application {
         Image Simulation = new Image(Objects.requireNonNull(getClass().getResource("/Simulation.png")).toExternalForm());
         ImageView SimulationView = new ImageView(Simulation);
 
-        backgroundView.setFitWidth(1550);
-        imageView1.setFitWidth(1550);
+        backgroundView.setFitWidth(1600);
+        imageView1.setFitWidth(1600);
         backgroundView.setPreserveRatio(true);
         imageView1.setPreserveRatio(true);
 
@@ -230,7 +230,7 @@ public class MainSimul extends Application {
             int y = Integer.parseInt(tf2.getText());
             Plateau plateau = new Plateau(x,y);
             plateau.setCaseFinal(plateau.getCase(1,0));
-            PlateauGUI p = new PlateauGUI(plateau,root);
+            PlateauGUI p = new PlateauGUI(plateau,root,scene);
             p.show();
         });
 
