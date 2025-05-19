@@ -74,7 +74,7 @@ public class PlateauGUI {
         }
 
         gridPane.getChildren().remove(supprime);
-        ImageView mouton = image(new Image(Objects.requireNonNull(getClass().getResource("/mouton.png")).toExternalForm()));
+        ImageView mouton = image(new Image(Objects.requireNonNull(getClass().getResource("/moutonv2.png")).toExternalForm()));
         gridPane.add(mouton, x, y);
 
         //PARTIE LOUP
@@ -101,7 +101,7 @@ public class PlateauGUI {
         }
 
         gridPane.getChildren().remove(supprime);
-        ImageView loup = image(new Image(Objects.requireNonNull(getClass().getResource("/Loup.png")).toExternalForm()));
+        ImageView loup = image(new Image(Objects.requireNonNull(getClass().getResource("/Loupv2.png")).toExternalForm()));
         gridPane.add(loup, x, y);
 
     }
@@ -128,10 +128,6 @@ public class PlateauGUI {
         }
     }
 
-    public void caseFin(){
-        ImageView ibis ;
-    }
-
     public void choisi(Case c){
         ImageView ibis ;
         if (c.getType() == Element.Herbe){
@@ -154,6 +150,7 @@ public class PlateauGUI {
                 if (lequel == 1){
                     ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
                     plateau.getCase(c.getX(),c.getY()).setType(Element.Roche);
+                    System.out.println(plateau.verifier());
                 }else if(lequel == 2 ){
                     ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
                     plateau.getCase(c.getX(),c.getY()).setType(Element.Herbe);
@@ -173,6 +170,7 @@ public class PlateauGUI {
 
                 plateau.getCase(c.getX(), c.getY()).setType(Element.Herbe);
                 plateau.setCaseFinal(c);
+                System.out.println(plateau.verifier());
             }
             else if (c.equals(plateau.getCaseFinal())){
                 ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
@@ -186,7 +184,6 @@ public class PlateauGUI {
             }
         });
         gridPane.add(ibis, c.getX(), c.getY());
-
         //
     }
 
@@ -197,19 +194,88 @@ public class PlateauGUI {
         gridPane.setPadding(new Insets(25, 25, 25, 25));
         gridPane.setGridLinesVisible(true);
 
+        Image rochemere = new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm());
 
-        Button roche = new Button("Roche");
-        Button herbe = new Button("Herbe");
-        Button cactus = new Button("Cactus");
-        Button marguerite = new Button("Marguerite");
-        Button sortie = new Button("Sortie");
-        Button mouton = new Button("Mouton");
-        Button loup = new Button("Loup");
+        ImageView roche = new ImageView(rochemere);
+        roche.setFitWidth(50);
+        roche.setFitHeight(50);
+        Image herbemere = new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm());
 
-        roche.setOnAction(event -> {
+        ImageView herbe = new ImageView(herbemere);
+        herbe.setFitWidth(50);
+        herbe.setFitHeight(50);
+
+        Image cactusmere = new Image(Objects.requireNonNull(getClass().getResource("/cactusv2.png")).toExternalForm());
+
+        ImageView cactus = new ImageView(cactusmere);
+
+        cactus.setFitWidth(50);
+        cactus.setFitHeight(50);
+
+        Image margueritemere = new Image(Objects.requireNonNull(getClass().getResource("/margueritev2.png")).toExternalForm());
+
+        ImageView marguerite = new ImageView(margueritemere);
+        marguerite.setFitWidth(50);
+        marguerite.setFitHeight(50);
+
+        Image sortiemere = new Image(Objects.requireNonNull(getClass().getResource("/Marteau_piqueur.png")).toExternalForm());
+
+        ImageView sortie = new ImageView(sortiemere);
+        sortie.setFitWidth(50);
+        sortie.setFitHeight(50);
+
+        Image moutonmere = new Image(Objects.requireNonNull(getClass().getResource("/moutonv2.png")).toExternalForm());
+
+        ImageView mouton = new ImageView(moutonmere);
+        mouton.setFitWidth(50);
+        mouton.setFitHeight(50);
+
+        Image loupmere = new Image(Objects.requireNonNull(getClass().getResource("/loupv2.png")).toExternalForm());
+
+        ImageView loup = new ImageView(loupmere);
+        loup.setFitWidth(50);
+        loup.setFitHeight(50);
+        Button Valide = new Button("Valide");
+
+        Valide.setPrefSize(200, 60);
+        Valide.setStyle(
+                "-fx-background-size: cover;" +
+                        "-fx-text-fill: #5c3b00;" +
+                        "-fx-font-size: 18px;" +
+                        "-fx-background-color: green;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-background-radius: 30;" +
+                        "-fx-border-radius: 30;" +
+                        "-fx-padding: 10 20 10 20;"
+        );
+        Valide.setOnMouseEntered(e -> Valide.setStyle("-fx-background-color: #0b8329;" +
+                "-fx-background-size: cover;" +
+                "-fx-text-fill: #5c3b00;" +
+                "-fx-font-size: 18px;" +
+                "-fx-font-weight: bold;" +
+                "-fx-background-radius: 30;" +
+                "-fx-border-radius: 30;" +
+                "-fx-padding: 10 20 10 20;"
+        ));
+
+
+        Valide.setOnMouseExited(e -> Valide.setStyle("-fx-background-size: cover;" +
+                "-fx-text-fill: #5c3b00;" +
+                "-fx-font-size: 18px;" +
+                "-fx-background-color: green;" +
+                "-fx-font-weight: bold;" +
+                "-fx-background-radius: 30;" +
+                "-fx-border-radius: 30;" +
+                "-fx-padding: 10 20 10 20;"
+        ));
+
+
+
+
+        roche.setOnMouseClicked(event -> {
             lequel = 1;
         });
-        herbe.setOnAction(event -> {
+        herbe.setOnMouseClicked(event -> {
             lequel = 2;
         });
         cactus.setOnMouseClicked(event -> {
@@ -234,17 +300,20 @@ public class PlateauGUI {
         roche.setTranslateX(700);
         roche.setTranslateY(350);
         herbe.setTranslateX(700);
-        herbe.setTranslateY(320);
+        herbe.setTranslateY(300);
         cactus.setTranslateX(700);
-        cactus.setTranslateY(290);
+        cactus.setTranslateY(250);
         marguerite.setTranslateX(700);
-        marguerite.setTranslateY(260);
+        marguerite.setTranslateY(200);
         sortie.setTranslateX(700);
-        sortie.setTranslateY(230);
+        sortie.setTranslateY(150);
         mouton.setTranslateX(700);
-        mouton.setTranslateY(200);
+        mouton.setTranslateY(100);
         loup.setTranslateX(700);
-        loup.setTranslateY(170);
+        loup.setTranslateY(50);
+        Valide.setTranslateX(0);
+        Valide.setTranslateY(-300);
+
 
 
 
@@ -255,7 +324,7 @@ public class PlateauGUI {
             }
 
         stackPane.getChildren().add(gridPane);
-        stackPane.getChildren().addAll(roche,herbe,cactus,marguerite,sortie,mouton,loup);
+        stackPane.getChildren().addAll(roche,herbe,cactus,marguerite,sortie,mouton,loup,Valide);
 
     }
 
