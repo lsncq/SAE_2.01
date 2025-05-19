@@ -173,7 +173,7 @@ public class PlateauGUI {
                 plateau.setCaseFinal(c);
                 valide.setDisable(!plateau.verifier());
             }
-            else if (c.equals(plateau.getCaseFinal())){
+            else if (c.equals(plateau.getCaseFinal()) && lequel == 5){
                 ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
                 plateau.getCase(c.getX(),c.getY()).setType(Element.Roche);
             } else if (lequel == 6 && c.getType() != Element.Roche) {
@@ -270,6 +270,10 @@ public class PlateauGUI {
                 "-fx-border-radius: 30;" +
                 "-fx-padding: 10 20 10 20;"
         ));
+        Valide.setOnMouseClicked(e -> {
+            lequel = 0;
+            jeu();
+        });
 
 
 
@@ -329,6 +333,12 @@ public class PlateauGUI {
         stackPane.getChildren().addAll(roche,herbe,cactus,marguerite,sortie,mouton,loup,Valide);
         displayAnimal();
 
+    }
+
+
+    public void jeu(){
+        stackPane.getChildren().clear();
+        stackPane.getChildren().add(gridPane);
     }
 
 
