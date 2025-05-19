@@ -44,6 +44,11 @@ mvn test
 - LEWANDOWSKI--BRY Enzo
 - DEPARIS Corentin
 
+## 👩🏻‍🏫🧑🏼‍🏫 Référents
+- Mme LEPREUX Sophie
+- M. POLET Philippe
+- M. BAY Thierry
+
 ## 📃 Droits
 Les éléments présents graphiques présents dans le jeu ont été entièrement dessinés par notre équipe, donc sont libres de droit.
 
