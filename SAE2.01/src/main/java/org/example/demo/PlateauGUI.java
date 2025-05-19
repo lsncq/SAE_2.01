@@ -26,6 +26,7 @@ public class PlateauGUI {
     private int[] ancienPosMouton ;
     private int[] ancienPosLoup ;
     private int lequel;
+    public Button valide;
 
     public PlateauGUI(Plateau plateau,StackPane stackPane) {
         this.plateau = plateau;
@@ -101,7 +102,7 @@ public class PlateauGUI {
         }
 
         gridPane.getChildren().remove(supprime);
-        ImageView loup = image(new Image(Objects.requireNonNull(getClass().getResource("/Loupv2.png")).toExternalForm()));
+        ImageView loup = image(new Image(Objects.requireNonNull(getClass().getResource("/loupv2.png")).toExternalForm()));
         gridPane.add(loup, x, y);
 
     }
@@ -150,7 +151,6 @@ public class PlateauGUI {
                 if (lequel == 1){
                     ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
                     plateau.getCase(c.getX(),c.getY()).setType(Element.Roche);
-                    System.out.println(plateau.verifier());
                 }else if(lequel == 2 ){
                     ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
                     plateau.getCase(c.getX(),c.getY()).setType(Element.Herbe);
@@ -161,6 +161,7 @@ public class PlateauGUI {
                     ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/margueritev2.png")).toExternalForm()));
                     plateau.getCase(c.getX(), c.getY()).setType(Element.Marguerite);
                 }
+                valide.setDisable(!plateau.verifier());
             }else if(lequel == 5 && (c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0))  {
                 ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
                 plateau.getCaseFinal().setType(Element.Roche);
@@ -170,7 +171,7 @@ public class PlateauGUI {
 
                 plateau.getCase(c.getX(), c.getY()).setType(Element.Herbe);
                 plateau.setCaseFinal(c);
-                System.out.println(plateau.verifier());
+                valide.setDisable(!plateau.verifier());
             }
             else if (c.equals(plateau.getCaseFinal())){
                 ibis.setImage(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
@@ -236,6 +237,7 @@ public class PlateauGUI {
         loup.setFitWidth(50);
         loup.setFitHeight(50);
         Button Valide = new Button("Valide");
+        valide = Valide;
 
         Valide.setPrefSize(200, 60);
         Valide.setStyle(
@@ -325,6 +327,7 @@ public class PlateauGUI {
 
         stackPane.getChildren().add(gridPane);
         stackPane.getChildren().addAll(roche,herbe,cactus,marguerite,sortie,mouton,loup,Valide);
+        displayAnimal();
 
     }
 

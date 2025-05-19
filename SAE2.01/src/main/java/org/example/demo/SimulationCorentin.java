@@ -228,7 +228,14 @@ public class SimulationCorentin extends Application {
 
         btn5.setOnAction(event -> {
             System.out.println(tf1.getText()+tf2.getText());
-            root.getChildren().clear();//mettre le plateau
+            root.getChildren().clear();
+            root.getChildren().add(backgroundView);
+            int x = Integer.parseInt(tf1.getText());
+            int y = Integer.parseInt(tf2.getText());
+            Plateau plateau = new Plateau(x,y);
+            plateau.setCaseFinal(plateau.getCase(1,0));
+            PlateauGUI p = new PlateauGUI(plateau,root);
+            p.show();
         });
 
 
