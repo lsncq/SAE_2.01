@@ -21,6 +21,7 @@ import org.controlsfx.tools.Platform;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class PlateauGUI {
@@ -173,7 +174,20 @@ public class PlateauGUI {
         gridPane.add(ibis, c.getX(), c.getY());
         //
     }
+    public static String enPhrase(List<Element> liste) {
+        if (liste.isEmpty()) return "rien.";
 
+        String resultat = "";
+        for (int i = 0; i < liste.size(); i++) {
+            resultat += liste.get(i);
+            if (i < liste.size() - 2) {
+                resultat += ", ";
+            } else if (i == liste.size() - 2) {
+                resultat += " et ";
+            }
+        }
+        return resultat + ".";
+    }
     public void show() {
         gridPane.setHgap(0);
         gridPane.setVgap(0);
@@ -399,6 +413,20 @@ public class PlateauGUI {
                         "-fx-text-fill: #333333;" +
                         "-fx-font-size: 30px;" +
                         "-fx-background-radius: 8;" +
+                        "-fx-background-color: #d2d0d0;" +
+                        "-fx-padding: 5 10 5 10;"
+        );
+
+
+
+        Label moutonamange = new Label("Le mouton a mangé : "+enPhrase(plateau.getMouton().getNourriture()));
+        moutonamange.setTranslateY(150);
+        moutonamange.setStyle(
+                "-fx-background-color: #ffffff;" +
+                        "-fx-text-fill: #333333;" +
+                        "-fx-font-size: 30px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-background-color: #d2d0d0;" +
                         "-fx-padding: 5 10 5 10;"
         );
 
@@ -420,7 +448,7 @@ public class PlateauGUI {
                 System.exit(0);
             });
 
-            stackPane.getChildren().addAll(backgroundView,tour,btn3);
+            stackPane.getChildren().addAll(backgroundView,tour,btn3,moutonamange);
 
 //            System.out.println("Total"+plateau.getMouton().getNourriture());
         } else if (plateau.getMouton().getX() == plateau.getCaseFinal().getX() && plateau.getMouton().getY() == plateau.getCaseFinal().getY()) {
@@ -440,7 +468,7 @@ public class PlateauGUI {
                 System.exit(0);
             });
 
-            stackPane.getChildren().addAll(backgroundView,tour,btn3);
+            stackPane.getChildren().addAll(backgroundView,tour,btn3,moutonamange);
         }
     }
 
