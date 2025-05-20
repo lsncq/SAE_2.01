@@ -15,6 +15,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Text;
 
 
 import java.util.ArrayList;
@@ -32,20 +33,17 @@ public class PlateauGUI {
     private int lequel;
     private Button valide;
     private Scene scene;
+    private int nbPas;
 
     public PlateauGUI(Plateau plateau,StackPane stackPane,Scene scene) {
         this.plateau = plateau;
         this.scene = scene;
         this.stackPane = stackPane;
         gridPane = new GridPane();
-        this.ancienElementLoup = image(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
-        this.ancienElementMouton = image(new Image(Objects.requireNonNull(getClass().getResource("/herbev2.png")).toExternalForm()));
+        this.ancienElementLoup = image(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
+        this.ancienElementMouton = image(new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm()));
         this.ancienPosLoup = new int[2];
-        ancienPosLoup[0] = plateau.getLoup().getX();
-        ancienPosLoup[1] = plateau.getLoup().getY();
         this.ancienPosMouton = new int[2];
-        this.ancienPosMouton[0] = plateau.getMouton().getX();
-        this.ancienPosMouton[1] = plateau.getMouton().getY();
     }
 
     private ImageView image(Image image) {
@@ -318,41 +316,50 @@ public class PlateauGUI {
         stackPane.getChildren().addAll(roche,herbe,cactus,marguerite,sortie,mouton,loup,Valide);
         displayAnimal();
 
+
     }
     private void texte(Label l , String animal , int nbPas){
         l.setText(animal + " : " + nbPas + " pas restant.");
     }
 
-    private void bouge(Animal a, KeyCode k,int nbPas){
+    private void bouge(Animal a, KeyCode k, Label text){
         if (k == KeyCode.UP){
             if (plateau.getCase(a.getX(),a.getY()-1).getType() != Element.Roche){
                 a.deplace(a.getX(),a.getY()-1);
                 displayAnimal();
-                nbPas -=1;
+                nbPas--;
             }
         }else if (k == KeyCode.DOWN){
             if (plateau.getCase(a.getX(),a.getY()+1).getType() != Element.Roche){
                 a.deplace(a.getX(),a.getY()+1);
                 displayAnimal();
-                nbPas -=1;
+                nbPas--;
             }
         }else if (k == KeyCode.LEFT){
             if (plateau.getCase(a.getX()-1,a.getY()).getType() != Element.Roche){
                 a.deplace(a.getX()-1,a.getY());
                 displayAnimal();
-                nbPas -=1;
+                nbPas--;
             }
         }else if (k == KeyCode.RIGHT){
             if (plateau.getCase(a.getX()+1,a.getY()).getType() != Element.Roche){
                 a.deplace(a.getX()+1,a.getY());
                 displayAnimal();
-                nbPas -=1;
+                nbPas--;
             }
         }
+        texte(text,a.toString(),nbPas);
         if (a instanceof Mouton && nbPas == 0){
-            nbPas = a.getNbCase();
+            nbPas = 3;
+            lequel = 11;
+            texte(text,"Loup",nbPas);
         }else if (a instanceof Loup && nbPas == 0){
-            nbPas = a.getNbCase();
+            nbPas = plateau.getMouton().getNbCase();
+            lequel = 10;
+            texte(text,"Mouton",nbPas);
+        }
+        if ((plateau.getMouton().getX() == plateau.getLoup().getX() && plateau.getMouton().getY() == plateau.getLoup().getY()) || (plateau.getMouton().getX() == plateau.getCaseFinal().getX() && plateau.getMouton().getY() == plateau.getCaseFinal().getY())){
+            stackPane.getChildren().clear();
         }
     }
 
@@ -362,10 +369,10 @@ public class PlateauGUI {
         backgroundView.setFitWidth(1600);
         backgroundView.setPreserveRatio(true);
         Label texte = new Label("Mouton : 3 pas restant.");
-        int nbPas = 3;
         Mouton m = plateau.getMouton();
         Loup l = plateau.getLoup();
         lequel = 10;
+        nbPas = 3;
 
 
         stackPane.getChildren().clear();
@@ -374,11 +381,9 @@ public class PlateauGUI {
 
         scene.setOnKeyPressed(e -> {
             if (e.getCode().isArrowKey() && lequel ==10 ){
-                bouge(m,e.getCode(),nbPas);
-                texte(texte,m.toString(),nbPas);
+                bouge(m,e.getCode(),texte);
             }else if (e.getCode().isArrowKey() && lequel == 11){
-                bouge(l,e.getCode(),nbPas);
-                texte(texte,l.toString(),nbPas);
+                bouge(l,e.getCode(),texte);
             }
         });
     }
