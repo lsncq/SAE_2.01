@@ -15,6 +15,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 
@@ -319,7 +320,8 @@ public class PlateauGUI {
 
     }
     private void texte(Label l , String animal , int nbPas){
-        l.setText(animal + " : " + nbPas + " pas restant.");
+        l.setText(animal + " : " + nbPas + " pas restant");
+
     }
 
     private void bouge(Animal a, KeyCode k, Label text){
@@ -368,7 +370,15 @@ public class PlateauGUI {
         ImageView backgroundView = new ImageView(image);
         backgroundView.setFitWidth(1600);
         backgroundView.setPreserveRatio(true);
-        Label texte = new Label("Mouton : 3 pas restant.");
+        Label texte = new Label("Mouton : 3 pas restant");
+        texte.setTranslateY(-300);
+        texte.setStyle(
+                "-fx-background-color: #f0f0f0;" +
+                        "-fx-text-fill: #333333;" +
+                        "-fx-font-size: 30px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 5 10 5 10;"
+        );
         Mouton m = plateau.getMouton();
         Loup l = plateau.getLoup();
         lequel = 10;
