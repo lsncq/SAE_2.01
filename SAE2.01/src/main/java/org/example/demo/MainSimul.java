@@ -55,7 +55,7 @@ public class MainSimul extends Application {
         Image image = new Image(Objects.requireNonNull(getClass().getResource("/background.png")).toExternalForm());
         ImageView backgroundView = new ImageView(image);
 
-        Image image1 = new Image(Objects.requireNonNull(getClass().getResource("/regles_du_jeu.png")).toExternalForm());
+        Image image1 = new Image(Objects.requireNonNull(getClass().getResource("/ReglesDuJeu.png")).toExternalForm());
         ImageView imageView1 = new ImageView(image1);
 
         Image Simulation = new Image(Objects.requireNonNull(getClass().getResource("/Simulation.png")).toExternalForm());

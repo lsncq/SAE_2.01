@@ -17,6 +17,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import org.controlsfx.tools.Platform;
 
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class PlateauGUI {
     private int nbTours;
 
     public PlateauGUI(Plateau plateau,StackPane stackPane,Scene scene) {
-        this.nbTours = 0;
+        this.nbTours = 1;
         this.plateau = plateau;
         this.scene = scene;
         this.stackPane = stackPane;
@@ -260,31 +261,58 @@ public class PlateauGUI {
             jeu();
         });
 
+        Label texte5 = new Label("Vous avez selectionné :");
+        texte5.setTranslateY(-50);
+        texte5.setTranslateX(700);
+        texte5.setStyle(
+                "-fx-background-color: #ffffff;" +
+                        "-fx-text-fill: #333333;" +
+                        "-fx-font-size: 10px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 5 10 5 10;"
+        );
 
+        Label texte6 = new Label("Cliquez sur l'image \n pour sélectionner");
+        texte6.setTranslateY(0);
+        texte6.setTranslateX(700);
+        texte6.setStyle(
+                "-fx-background-color: #ffffff;" +
+                        "-fx-text-fill: #333333;" +
+                        "-fx-font-size: 10px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 5 10 5 10;"
+        );
 
 
         roche.setOnMouseClicked(event -> {
             lequel = 1;
+            texte6.setText("rocher");
         });
         herbe.setOnMouseClicked(event -> {
             lequel = 2;
+            texte6.setText("herbe");
         });
         cactus.setOnMouseClicked(event -> {
             lequel = 3;
+            texte6.setText("cactus");
         });
         marguerite.setOnMouseClicked(event -> {
             lequel = 4;
+            texte6.setText("marguerite");
         });
         sortie.setOnMouseClicked(event -> {
 
             lequel = 5;
+            texte6.setText("sortie");
         });
         mouton.setOnMouseClicked(event -> {
             lequel = 6;
+            texte6.setText("mouton");
         });
 
         loup.setOnMouseClicked(event -> {
             lequel = 7;
+            texte6.setText("loup");
         });
 
 
@@ -315,7 +343,7 @@ public class PlateauGUI {
             }
 
         stackPane.getChildren().add(gridPane);
-        stackPane.getChildren().addAll(roche,herbe,cactus,marguerite,sortie,mouton,loup,Valide);
+        stackPane.getChildren().addAll(roche,herbe,cactus,marguerite,sortie,mouton,loup,Valide,texte5,texte6);
         displayAnimal();
 
 
@@ -364,9 +392,55 @@ public class PlateauGUI {
             texte(text,"Mouton",nbPas);
             nbTours++;
         }
-        if ((plateau.getMouton().getX() == plateau.getLoup().getX() && plateau.getMouton().getY() == plateau.getLoup().getY()) || (plateau.getMouton().getX() == plateau.getCaseFinal().getX() && plateau.getMouton().getY() == plateau.getCaseFinal().getY())){
+        Label tour = new Label("Vous avez fini le jeu en "+nbTours+" tours");
+        tour.setTranslateY(200);
+        tour.setStyle(
+                "-fx-background-color: #ffffff;" +
+                        "-fx-text-fill: #333333;" +
+                        "-fx-font-size: 30px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 5 10 5 10;"
+        );
+
+
+        if (plateau.getMouton().getX() == plateau.getLoup().getX() && plateau.getMouton().getY() == plateau.getLoup().getY()){
             stackPane.getChildren().clear();
-            System.out.println("Total"+plateau.getMouton().getNourriture());
+            Image image3 = new Image(Objects.requireNonNull(getClass().getResource("/LoupGagne.png")).toExternalForm());
+            ImageView backgroundView = new ImageView(image3);
+            backgroundView.setFitHeight(800);
+            backgroundView.setFitWidth(1600);
+
+            Button btn3 = new Button();
+
+            btn3.opacityProperty().setValue(0);
+            btn3.setTranslateX(0);
+            btn3.setTranslateY(300);
+            btn3.setPrefSize(400, 100);
+            btn3.setOnAction(e -> {
+                System.exit(0);
+            });
+
+            stackPane.getChildren().addAll(backgroundView,tour,btn3);
+
+//            System.out.println("Total"+plateau.getMouton().getNourriture());
+        } else if (plateau.getMouton().getX() == plateau.getCaseFinal().getX() && plateau.getMouton().getY() == plateau.getCaseFinal().getY()) {
+            stackPane.getChildren().clear();
+            Image image3 = new Image(Objects.requireNonNull(getClass().getResource("/MoutonGagne.png")).toExternalForm());
+            ImageView backgroundView = new ImageView(image3);
+            backgroundView.setFitHeight(800);
+            backgroundView.setFitWidth(1600);
+
+            Button btn3 = new Button();
+
+            btn3.opacityProperty().setValue(0);
+            btn3.setTranslateX(0);
+            btn3.setTranslateY(300);
+            btn3.setPrefSize(400, 100);
+            btn3.setOnAction(e -> {
+                System.exit(0);
+            });
+
+            stackPane.getChildren().addAll(backgroundView,tour,btn3);
         }
     }
 
@@ -376,6 +450,26 @@ public class PlateauGUI {
         backgroundView.setFitWidth(1600);
         backgroundView.setPreserveRatio(true);
         Label texte = new Label("Mouton : 3 pas restant");
+        Image image2 = new Image(Objects.requireNonNull(getClass().getResource("/fleche202.png")).toExternalForm());
+        ImageView fleche = new ImageView(image2);
+
+        Label texte2 = new Label("appuyez sur les touches \n du clavier suivantes pour \n faire avancer l'animal");
+        texte2.setTranslateX(700);
+        texte2.setTranslateY(100);
+        texte2.setStyle(
+                "-fx-background-color: #ffffff;" +
+                        "-fx-text-fill: #333333;" +
+                        "-fx-font-size: 10px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 5 10 5 10;"
+        );
+
+
+
+        fleche.setTranslateX(700);
+        fleche.setTranslateY(250);
+        fleche.setFitWidth(50);
+        fleche.setFitHeight(200);
         texte.setTranslateY(-300);
         texte.setStyle(
                 "-fx-background-color: #f0f0f0;" +
@@ -391,7 +485,7 @@ public class PlateauGUI {
 
 
         stackPane.getChildren().clear();
-        stackPane.getChildren().addAll(backgroundView, gridPane, texte);
+        stackPane.getChildren().addAll(backgroundView, gridPane, texte,fleche,texte2);
 
 
         scene.setOnKeyPressed(e -> {
