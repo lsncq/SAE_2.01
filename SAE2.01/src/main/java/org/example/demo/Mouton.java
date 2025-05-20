@@ -1,27 +1,34 @@
 package org.example.demo;
 
+import java.util.ArrayList;
+
 public class Mouton extends Animal{
 
     private Plateau plateau;
-    private Element nourriture;
+    private ArrayList<Element> nourriture;
 
     public Mouton(Plateau plateau) {
         this.plateau = plateau;
+        this.nourriture = new ArrayList<>();
     }
 
     public boolean mange(){
-        nourriture = plateau.getCase(x,y).getType();
-        if (nourriture ==null || nourriture==Element.Roche){
+        nourriture.add(plateau.getCase(x,y).getType());
+        if (nourriture ==null || nourriture.getLast()==Element.Roche){
             return false;
         }
-        if (nourriture == Element.Cactus) this.setNbCase(1);
-        if (nourriture == Element.Herbe) this.setNbCase(2);
-        if (nourriture == Element.Marguerite) this.setNbCase(4);
+        if (nourriture.getLast() == Element.Cactus) this.setNbCase(1);
+        if (nourriture.getLast() == Element.Herbe) this.setNbCase(2);
+        if (nourriture.getLast()  == Element.Marguerite) this.setNbCase(4);
         return true;
     }
 
     public String toString() {
         return "Mouton";
+    }
+
+    public ArrayList<Element> getNourriture() {
+        return nourriture;
     }
 
 }

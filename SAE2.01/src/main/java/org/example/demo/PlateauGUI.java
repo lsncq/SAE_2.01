@@ -35,8 +35,10 @@ public class PlateauGUI {
     private Button valide;
     private Scene scene;
     private int nbPas;
+    private int nbTours;
 
     public PlateauGUI(Plateau plateau,StackPane stackPane,Scene scene) {
+        this.nbTours = 0;
         this.plateau = plateau;
         this.scene = scene;
         this.stackPane = stackPane;
@@ -68,7 +70,6 @@ public class PlateauGUI {
         }
         gridPane.getChildren().remove(supprime);
         gridPane.add(ancienElementMouton,ancienPosMouton[0],ancienPosMouton[1]);
-        plateau.getMouton().mange();
         for (Node node : gridPane.getChildren()) {
             if (GridPane.getColumnIndex(node) != null && GridPane.getColumnIndex(node) == x && GridPane.getRowIndex(node) == y) {
 
@@ -325,6 +326,7 @@ public class PlateauGUI {
     }
 
     private void bouge(Animal a, KeyCode k, Label text){
+        System.out.println(plateau.getMouton().getNourriture());
         if (k == KeyCode.UP){
             if (plateau.getCase(a.getX(),a.getY()-1).getType() != Element.Roche){
                 a.deplace(a.getX(),a.getY()-1);
@@ -355,13 +357,16 @@ public class PlateauGUI {
             nbPas = 3;
             lequel = 11;
             texte(text,"Loup",nbPas);
+            a.mange();
         }else if (a instanceof Loup && nbPas == 0){
             nbPas = plateau.getMouton().getNbCase();
             lequel = 10;
             texte(text,"Mouton",nbPas);
+            nbTours++;
         }
         if ((plateau.getMouton().getX() == plateau.getLoup().getX() && plateau.getMouton().getY() == plateau.getLoup().getY()) || (plateau.getMouton().getX() == plateau.getCaseFinal().getX() && plateau.getMouton().getY() == plateau.getCaseFinal().getY())){
             stackPane.getChildren().clear();
+            System.out.println("Total"+plateau.getMouton().getNourriture());
         }
     }
 
