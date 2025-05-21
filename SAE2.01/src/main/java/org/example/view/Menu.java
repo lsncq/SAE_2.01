@@ -21,6 +21,8 @@ public class Menu extends Stage {
         StackPane root = new StackPane();
         StackPane root1 = new StackPane();
 
+        //initialisation des label
+
         root.setStyle("-fx-background-color: blue;");
         Label tf = new Label("Mange moi si tu peux");
         tf.setStyle("-fx-text-fill: white;");
@@ -50,7 +52,7 @@ public class Menu extends Stage {
         txt3.setTranslateY(150);
 
 
-
+        //initialisation des images
 
         Image image = new Image(Objects.requireNonNull(getClass().getResource("/background.png")).toExternalForm());
         ImageView backgroundView = new ImageView(image);
@@ -65,6 +67,8 @@ public class Menu extends Stage {
         imageView1.setFitWidth(1600);
         backgroundView.setPreserveRatio(true);
         imageView1.setPreserveRatio(true);
+
+        //initialisation des boutons
 
         Button btn1 = new Button("JOUER");
         Button btn2 = new Button("REGLES DU JEU");
@@ -179,7 +183,7 @@ public class Menu extends Stage {
 
 
 
-
+        //mettre à la bonne place les éléments
 
         Scene scene = new Scene(root, 1600, 800);
 
@@ -196,7 +200,7 @@ public class Menu extends Stage {
 
 
 
-
+        //mise en place des événements des boutons
         root.getChildren().addAll(backgroundView,tf,vbox,vbox2,vbox3);
         btn2.setOnAction(event -> {
 
@@ -235,7 +239,7 @@ public class Menu extends Stage {
 
 
 
-
+        //initialisation du stage
         stage.setTitle("Mange Moi si tu peux !");
         stage.setScene(scene);
         stage.show();
