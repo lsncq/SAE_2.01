@@ -17,7 +17,7 @@ Tous les deux ont une vision de 5 cases (distance de Manhattan)
 ## 🛠️ Fonctionnalités
 - Génération personnalisée du labyrinthe
 - Positionnement du loup et du mouton
-- Contrôle manuel des animaux (glisser-déposer)
+- Contrôle manuel des animaux (flèches du clavier)
 - Comportemment conditioné par la vision et les végétaux consommés
 - Fin de la partie lorsqu'un des animaux atteint son objectif
 
@@ -50,6 +50,6 @@ mvn test
 - M. BAY Thierry
 
 ## 📃 Droits
-Les éléments présents graphiques présents dans le jeu ont été entièrement dessinés par notre équipe, donc sont libres de droit.
+Les éléments présents graphiques présents dans le jeu (mouton, loup, cacutus, herbe, rocher, etc.) ont été entièrement dessinés par notre équipe, et sont donc libres de droit.
 
-Ce projet à été réalisé dans le cadre d'un projet universitaire en BUT Informatique. Tout droit à l'Université Polytechnique des Hauts-de-France, IUT de Maubeuge.
+Ce projet à été réalisé dans le cadre d'un projet universitaire 2025 en BUT Informatique. Tout droit réservés à l'Université Polytechnique des Hauts-de-France, IUT de Maubeuge.
