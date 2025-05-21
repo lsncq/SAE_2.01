@@ -13,7 +13,7 @@ public class Case {
         this.plateau = plateau;
         this.x = x;
         this.y = y;
-        this.type = Element.randomElement();
+        this.type = Element.Roche;
     }
     public Case(Plateau plateau ,int x, int y, Element type) {
         this.plateau = plateau;

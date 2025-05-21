@@ -9,18 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import org.controlsfx.tools.Platform;
-
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -352,7 +342,7 @@ public class PlateauGUI {
 
 
 
-        for (Case c : plateau.getCases()) {
+        for (Case c : plateau.getAllCases()) {
             choisi(c);
             }
 
@@ -368,7 +358,6 @@ public class PlateauGUI {
     }
 
     private void bouge(Animal a, KeyCode k, Label text){
-        System.out.println(plateau.getMouton().getNourriture());
         if (k == KeyCode.UP){
             if (plateau.getCase(a.getX(),a.getY()-1).getType() != Element.Roche){
                 a.deplace(a.getX(),a.getY()-1);
@@ -421,7 +410,6 @@ public class PlateauGUI {
 
         Label moutonamange = new Label("Le mouton a mangé : "+enPhrase(plateau.getMouton().getNourriture()));
         moutonamange.setTranslateY(150);
-
         moutonamange.setStyle(
                 "-fx-background-color: #ffffff;" +
                         "-fx-text-fill: #333333;" +
@@ -451,7 +439,6 @@ public class PlateauGUI {
 
             stackPane.getChildren().addAll(backgroundView,tour,btn3,moutonamange);
 
-//            System.out.println("Total"+plateau.getMouton().getNourriture());
         } else if (plateau.getMouton().getX() == plateau.getCaseFinal().getX() && plateau.getMouton().getY() == plateau.getCaseFinal().getY()) {
             stackPane.getChildren().clear();
             Image image3 = new Image(Objects.requireNonNull(getClass().getResource("/MoutonGagne.png")).toExternalForm());
