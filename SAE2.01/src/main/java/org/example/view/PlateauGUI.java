@@ -44,6 +44,7 @@ public class PlateauGUI {
     }
 
     private ImageView image(Image image) {
+        //créer l'image pour la case de la grille
         ImageView view = new ImageView(image);
         view.setFitWidth((stackPane.getWidth()/1.3)/plateau.length());   // largeur en pixels
         view.setFitHeight((stackPane.getHeight()/1.3)/(plateau.height())); // longueur en pixels
@@ -52,6 +53,7 @@ public class PlateauGUI {
     }
 
     public boolean displayAnimal() {
+        //gere tous les déplacements des animaux
         int x = plateau.getMouton().getX();
         int y = plateau.getMouton().getY();
         //PARTIE MOUTON
@@ -107,7 +109,7 @@ public class PlateauGUI {
         return true;
 
     }
-
+    //affichage des éléments en fonction de la grille de la classe plateua
     public void choisi(Case c){
         ImageView ibis ;
         if (c.getType() == Element.Herbe){
@@ -124,7 +126,7 @@ public class PlateauGUI {
             ibis = image(i);
         }else { Image i = new Image(Objects.requireNonNull(getClass().getResource("/margueritev2.png")).toExternalForm());
             ibis = image(i);}
-        //
+        //affichage de la grille
         ibis.setOnMouseClicked(mouseEvent -> {
             if (lequel < 5 && !(c.getY() == plateau.height()-1 || c.getY() == 0 || c.getX() == plateau.length()-1 || c.getX() == 0)){
                 if (lequel == 1){
@@ -166,6 +168,8 @@ public class PlateauGUI {
         gridPane.add(ibis, c.getX(), c.getY());
         //
     }
+
+    //affiche ce que le mouton a mangé
     public static String enPhrase(List<Element> liste) {
         if (liste.isEmpty()) return "rien.";
 
@@ -186,7 +190,7 @@ public class PlateauGUI {
         gridPane.setAlignment(Pos.BOTTOM_CENTER);
         gridPane.setPadding(new Insets(25, 25, 25, 25));
         gridPane.setGridLinesVisible(true);
-
+        //définition des images
         Image rochemere = new Image(Objects.requireNonNull(getClass().getResource("/rocherv2.png")).toExternalForm());
 
         ImageView roche = new ImageView(rochemere);
@@ -230,7 +234,7 @@ public class PlateauGUI {
         loup.setFitHeight(50);
         Button Valide = new Button("Valide");
         valide = Valide;
-
+        //bouton validé pour lancer le jeu
         Valide.setPrefSize(200, 60);
         Valide.setStyle(
                 "-fx-background-size: cover;" +
@@ -266,7 +270,7 @@ public class PlateauGUI {
             lequel = 0;
             jeu();
         });
-
+        //afficher ce qui est sélectionné
         Label texte5 = new Label("Vous avez selectionné :");
         texte5.setTranslateY(-50);
         texte5.setTranslateX(700);
@@ -290,6 +294,7 @@ public class PlateauGUI {
         );
 
 
+        //choisir en cliquant sur l'image
         roche.setOnMouseClicked(event -> {
             lequel = 1;
             texte6.setText("rocher");
@@ -321,7 +326,7 @@ public class PlateauGUI {
             texte6.setText("loup");
         });
 
-
+        //deplacer les image cliquable
         roche.setTranslateX(700);
         roche.setTranslateY(350);
         herbe.setTranslateX(700);
@@ -354,12 +359,16 @@ public class PlateauGUI {
 
 
     }
+
+    //afficher le nombre de pas
     private void texte(Label l , String animal , int nbPas){
         l.setText(animal + " : " + nbPas + " pas restant");
 
     }
 
+    //bouger l'animal
     private void bouge(Animal a, KeyCode k, Label text){
+        //commande du jeu sur le clavier
         if (k == KeyCode.UP){
             if (plateau.getCase(a.getX(),a.getY()-1).getType() != Element.Roche){
                 a.deplace(a.getX(),a.getY()-1);
@@ -397,7 +406,9 @@ public class PlateauGUI {
             texte(text,"Mouton",nbPas);
             nbTours++;
         }
+        //afficher le nombre de tours
         Label tour = new Label("Vous avez fini le jeu en "+nbTours+" tours");
+        if (nbTours == 1){tour.setText("Vous avez fini le jeu en "+nbTours+" tour");};
         tour.setTranslateY(200);
         tour.setStyle(
                 "-fx-background-color: #ffffff;" +
@@ -409,7 +420,7 @@ public class PlateauGUI {
         );
 
 
-
+        //affiche ce que le mouton a mangé
         Label moutonamange = new Label("Le mouton a mangé : "+enPhrase(plateau.getMouton().getNourriture()));
         moutonamange.setTranslateY(150);
         moutonamange.setStyle(
@@ -461,7 +472,7 @@ public class PlateauGUI {
             stackPane.getChildren().addAll(backgroundView,tour,btn3,moutonamange);
         }
     }
-
+    //jeu après le choix des éléments
     public void jeu() {
         Image image = new Image(Objects.requireNonNull(getClass().getResource("/background.png")).toExternalForm());
         ImageView backgroundView = new ImageView(image);
