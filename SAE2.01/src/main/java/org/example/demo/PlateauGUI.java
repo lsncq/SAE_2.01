@@ -421,6 +421,7 @@ public class PlateauGUI {
 
         Label moutonamange = new Label("Le mouton a mangé : "+enPhrase(plateau.getMouton().getNourriture()));
         moutonamange.setTranslateY(150);
+
         moutonamange.setStyle(
                 "-fx-background-color: #ffffff;" +
                         "-fx-text-fill: #333333;" +
