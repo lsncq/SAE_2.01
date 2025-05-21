@@ -1,4 +1,4 @@
-package org.example.demo;
+package org.example.view;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,6 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import org.example.model.*;
+
 import java.util.List;
 import java.util.Objects;
 

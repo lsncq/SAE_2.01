@@ -1,4 +1,4 @@
-package org.example.demo;
+package org.example.controller;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -10,6 +10,8 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
+import org.example.model.Plateau;
+import org.example.view.PlateauGUI;
 
 import java.io.IOException;
 import java.util.Objects;

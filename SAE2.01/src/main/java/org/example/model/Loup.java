@@ -1,6 +1,4 @@
-package org.example.demo;
-
-import java.util.ArrayList;
+package org.example.model;
 
 public class Loup extends Animal {
 

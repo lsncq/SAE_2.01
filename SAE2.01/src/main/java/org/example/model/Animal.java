@@ -1,4 +1,4 @@
-package org.example.demo;
+package org.example.model;
 
 public abstract class Animal {
 
