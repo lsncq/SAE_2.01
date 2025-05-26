@@ -56,4 +56,8 @@ public class Case {
         this.type = type;
     }
 
+    public String toString() {
+        return "Case [x=" + x + ", y=" + y + ", type=" + type + "]\n";
+    }
+
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Mouton extends Animal{
 
-    private Plateau plateau;
     private ArrayList<Element> nourriture;
 
     public Mouton(Plateau plateau) {
@@ -13,6 +12,8 @@ public class Mouton extends Animal{
     }
 
     public boolean mange(){
+        System.out.println(pep());
+        System.out.println(pep());
         nourriture.add(plateau.getCase(x,y).getType());
         if (nourriture ==null || nourriture.getLast()==Element.Roche){
             return false;
