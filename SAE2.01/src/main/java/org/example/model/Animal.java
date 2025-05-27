@@ -31,58 +31,12 @@ public abstract class Animal {
         return nbCase;
     }
 
-    public LinkedList<Case> pep(){
-        LinkedList<Case> pile = new LinkedList<>();
-        LinkedList<Case> cases = new LinkedList<>();
-        Case current = plateau.getCase(x, y);
-        cases.add(current);
-        pile.add(current);
+    public abstract LinkedList<Case> pep();
 
-        while (current != plateau.getCaseFinal()) {
-            LinkedList<Case> voisins = new LinkedList<>();
+    public abstract LinkedList<Case> pel();
 
-            for (Case neighbor : current.voisin()) {
-                if (!cases.contains(neighbor)) {
-                    voisins.add(neighbor);
-                }
-            }
-            if (!voisins.isEmpty()) {
-                current = voisins.getLast();
-                cases.add(current);
-                pile.add(current);
-            }else {
-                pile.removeLast();
-                current = pile.getLast();
-            }
-        }
-        return pile;
-    }
+    public abstract LinkedList<Case> dijkstra();
 
-    public LinkedList<Case> pel(){
-        LinkedList<Case> file = new LinkedList<>();
-        LinkedList<Case> cases = new LinkedList<>();
-        Case current = plateau.getCase(x, y);
-        cases.add(current);
-        file.add(current);
-
-        while (current != plateau.getCaseFinal()) {
-            LinkedList<Case> voisins = new LinkedList<>();
-
-            for (Case neighbor : current.voisin()) {
-                if (!cases.contains(neighbor)) {
-                    voisins.add(neighbor);
-                }
-            }
-            if (!voisins.isEmpty()) {
-                current = voisins.getLast();
-                cases.add(current);
-                file.add(current);
-            }else {
-                file.removeFirst();
-                current = file.getFirst();
-            }
-        }
-        return file;
-    }
+    public abstract LinkedList<Case> fourmie();
 
 }
