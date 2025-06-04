@@ -75,7 +75,7 @@ public class Loup extends Animal {
         return null;
     }
 
-    public LinkedList<Case> fourmie(){
+    public LinkedList<Case> fourmi(){
         return null;
     }
 

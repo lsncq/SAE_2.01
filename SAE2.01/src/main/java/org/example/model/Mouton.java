@@ -1,9 +1,8 @@
 package org.example.model;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.LinkedList;
+import java.io.RandomAccessFile;
+import java.util.*;
+import java.util.random.RandomGenerator;
 
 public class Mouton extends Animal{
 
@@ -15,8 +14,7 @@ public class Mouton extends Animal{
     }
 
     public boolean mange(){
-        System.out.println(pep());
-        System.out.println(pep());
+        System.out.println(fourmi());
         nourriture.add(plateau.getCase(x,y).getType());
         if (nourriture ==null || nourriture.getLast()==Element.Roche){
             return false;
@@ -93,54 +91,110 @@ public class Mouton extends Animal{
         return null;
     }
 
-    public LinkedList<Case> fourmie(){
-//        INITIALISER la matrice des phéromones τ[i][j] à 0 chaque arête (i, j)
-//        POUR chaque itération de 1 à N_ITERATIONS FAIRE
-//          POUR chaque fourmi de 1 à N_ANTS FAIRE
-//              PLACER la fourmi au point de départ
-//              INITIALISER la liste du chemin courant avec le point de départ
-//              INITIALISER l’ensemble des nœuds visités
-//              TANT QUE la fourmi n’a pas atteint la sortie ET qu’il existe des mouvements possibles FAIRE
-//                  POUR chaque voisin non visité j du nœud courant i
-//                      CALCULER la probabilité de choisir j :
-//                      P[i][j] = (τ[i][j]^α) * (η[i][j]^β) / SOMME sur tous les voisins k de (τ[i][k]^α) * (η[i][k]^β)
-//                      où η[i][j] = 1
-//                  CHOISIR le prochain nœud j selon la distribution de probabilité P[i][j]
-//                  AJOUTER j au chemin courant et à l’ensemble des visités
-//                  SE DÉPLACER vers j
-//              FIN TANT QUE
-//                  SI la sortie est atteinte
-//                      ENREGISTRER le chemin et sa longueur
-//          FIN POUR
-//          ÉVAPORER les phéromones sur toutes les arêtes :
-//          τ[i][j] = (1 - ρ) * τ[i][j]  pour tout (i, j)
-//          POUR chaque chemin trouvé par une fourmi
-//              POUR chaque arête (i, j) du chemin
-//                  AJOUTER une quantité Δτ[i][j] = Q / longueur_du_chemin aux phéromones τ[i][j]
-//              FIN POUR
-//          FIN POUR
-//        FIN POUR
-//
-//        RENVOYER le meilleur chemin trouvé (plus court chemin vers la sortie)
-        LinkedList<Case> LeChemin = new LinkedList<>();
-        double[][] pheromones = new double[plateau.length()][plateau.height()];
-        double proba ;
-        // toute les pheromones a 1
-        for (int i = 0; i < plateau.length(); i++) {
-            for (int j = 0; j < plateau.height(); j++) {
-                pheromones[i][j] = 1;
+    private Case alea(ArrayList<Case> cases, double[] proba) {
+        double p = Math.random();
+        double cumulative = 0.0;
+        for (int j = 0; j < proba.length; j++) {
+            cumulative += proba[j];
+            if (p <= cumulative) {
+                return cases.get(j);
             }
         }
-        for (int i = 0; i < 100; i++) {
-            for (int ant  = 0; ant < 5; ant++) {
-                ArrayList<Case> chemin = new ArrayList<>();
-                chemin.add(plateau.getCase(x,y));
+        // Fallback: return the last case if rounding errors occur
+        return cases.get(cases.size() - 1);
+    }
 
+    public LinkedList<Case> fourmi() {
+        int width = plateau.length();
+        int height = plateau.height();
+        double[][] pheromones = new double[width][height];
+        double alpha = 2.0;
+        double beta = 1.0;
+        double evaporation = 0.05;
+        int iterations = 100;
+        int nAnts = 5;
+        double Q = 1.0;
 
-
+        // Initialize pheromones to 1
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                pheromones[i][j] = 1.0;
             }
         }
-        return LeChemin;
+
+        ArrayList<Case> bestPath = null;
+        int bestLength = Integer.MAX_VALUE;
+
+        for (int iter = 0; iter < iterations; iter++) {
+            ArrayList<ArrayList<Case>> validPaths = new ArrayList<>();
+
+            for (int ant = 0; ant < nAnts; ant++) {
+                Case current = plateau.getCase(x,y); // Use your method to get the start
+                ArrayList<Case> path = new ArrayList<>();
+                HashSet<Case> visited = new HashSet<>();
+                path.add(current);
+                visited.add(current);
+
+                while (!current.equals(plateau.getCaseFinal()) && !current.voisin().isEmpty()) {
+                    // Filter unvisited neighbors
+                    ArrayList<Case> availableNeighbors = new ArrayList<>();
+                    for (Case neighbor : current.voisin()) {
+                        if (!visited.contains(neighbor)) {
+                            availableNeighbors.add(neighbor);
+                        }
+                    }
+                    if (availableNeighbors.isEmpty()) break;
+
+                    // Calculate probabilities
+                    double[] proba = new double[availableNeighbors.size()];
+                    double sum = 0.0;
+                    for (int i = 0; i < availableNeighbors.size(); i++) {
+                        Case neighbor = availableNeighbors.get(i);
+                        // η[i][j] = 1, so omitted
+                        proba[i] = Math.pow(pheromones[neighbor.getX()][neighbor.getY()], alpha);
+                        sum += proba[i];
+                    }
+                    for (int i = 0; i < proba.length; i++) {
+                        proba[i] /= sum;
+                    }
+
+                    // Select next node
+                    Case next = alea(availableNeighbors, proba);
+                    path.add(next);
+                    visited.add(next);
+                    current = next;
+                }
+
+                if (current.equals(plateau.getCaseFinal())) {
+                    validPaths.add(path);
+                    if (path.size() < bestLength) {
+                        bestLength = path.size();
+                        bestPath = new ArrayList<>(path);
+                    }
+                }
+            }
+
+            // Evaporate pheromones
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    pheromones[i][j] *= (1 - evaporation);
+                }
+            }
+
+            // Update pheromones based on valid paths
+            for (ArrayList<Case> path : validPaths) {
+                double delta = Q / path.size();
+                for (Case c : path) {
+                    pheromones[c.getX()][c.getY()] += delta;
+                }
+            }
+        }
+
+        if (bestPath == null) {
+            // No path found
+            return new LinkedList<>();
+        }
+        return new LinkedList<>(bestPath);
     }
 
 }

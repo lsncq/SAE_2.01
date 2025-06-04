@@ -1,6 +1,7 @@
 package org.example.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Case {
 
@@ -58,6 +59,15 @@ public class Case {
 
     public String toString() {
         return "Case [x=" + x + ", y=" + y + ", type=" + type + "]\n";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Case c) {
+            return x == c.x && y == c.y && type.equals(c.type);
+        } else {
+            return false;
+        }
     }
 
 }
