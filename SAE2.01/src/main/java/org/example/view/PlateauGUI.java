@@ -31,6 +31,7 @@ public class PlateauGUI {
     private Scene scene;
     private int nbPas;
     private int nbTours;
+    private ArrayList<Case> cases;
 
     public PlateauGUI(Plateau plateau,StackPane stackPane,Scene scene) {
         this.nbTours = 1;
@@ -483,7 +484,7 @@ public class PlateauGUI {
         ImageView backgroundView = new ImageView(image);
         backgroundView.setFitWidth(1600);
         backgroundView.setPreserveRatio(true);
-        Label texte = new Label("Mouton : 3 pas restant");
+        Label texte = new Label("Mouton : 2 pas restant");
         Image image2 = new Image(Objects.requireNonNull(getClass().getResource("/fleche202.png")).toExternalForm());
         ImageView fleche = new ImageView(image2);
 
@@ -536,26 +537,119 @@ public class PlateauGUI {
         ImageView backgroundView = new ImageView(image);
         backgroundView.setFitWidth(1600);
         backgroundView.setPreserveRatio(true);
+        Label texte = new Label("Mouton : 2 pas restant");
+        texte.setTranslateY(-300);
+        texte.setStyle(
+                "-fx-background-color: #f0f0f0;" +
+                        "-fx-text-fill: #333333;" +
+                        "-fx-font-size: 30px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 5 10 5 10;"
+        );
         stackPane.getChildren().clear();
-        stackPane.getChildren().addAll(backgroundView, gridPane);
-        ArrayList<Case> cases = new ArrayList<>(plateau.getMouton().fourmi());
+        stackPane.getChildren().addAll(backgroundView, gridPane,texte);
+        Mouton m = plateau.getMouton();
+        Loup l = plateau.getLoup();
+        lequel = 10;
+        nbPas = 2;
+        cases = new ArrayList<>(plateau.getMouton().fourmi());
+        cases.removeFirst();
         scene.setOnKeyPressed(e -> {
-            fuite(cases);
+            if ( lequel ==10 ){
+                bougeAuto(m,texte);
+            }else if (lequel == 11){
+                bougeAuto(l,texte);
+            }
+            System.out.println("la ");
         });
     }
 
-    public void fuite(ArrayList<Case> cases) {
+    public void bougeAuto( Animal a, Label text) {
         Case c = cases.getFirst();
-        plateau.getMouton().deplace(c.getX(), c.getY());
+        a.deplace(c.getX(), c.getY());
         displayAnimal();
         cases.remove(c);
-    }
+        nbPas--;
+        texte(text,a.toString(),nbPas);
+        if (a instanceof Mouton && nbPas == 0){
+            nbPas = 3;
+            lequel = 11;
+            texte(text,"Loup",nbPas);
+            a.mange();
+            cases = new ArrayList<>(plateau.getLoup().fourmi());
+            cases.removeFirst();
+        }else if (a instanceof Loup && nbPas == 0){
+            nbPas = plateau.getMouton().getNbCase();
+            lequel = 10;
+            texte(text,"Mouton",nbPas);
+            nbTours++;
+            this.cases = new ArrayList<>(plateau.getMouton().fourmi());
+            cases.removeFirst();
+        }
+        //afficher le nombre de tours
+        Label tour = new Label("Vous avez fini le jeu en "+nbTours+" tours");
+        if (nbTours == 1){tour.setText("Vous avez fini le jeu en "+nbTours+" tour");};
+        tour.setTranslateY(200);
+        tour.setStyle(
+                "-fx-background-color: #ffffff;" +
+                        "-fx-text-fill: #333333;" +
+                        "-fx-font-size: 30px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-background-color: #d2d0d0;" +
+                        "-fx-padding: 5 10 5 10;"
+        );
 
-    public void attack(ArrayList<Case> cases) {
-        Case c = cases.getFirst();
-        plateau.getLoup().deplace(c.getX(), c.getY());
-        displayAnimal();
-        cases.remove(c);
+
+        //affiche ce que le mouton a mangé
+        Label moutonamange = new Label("Le mouton a mangé : "+enPhrase(plateau.getMouton().getNourriture()));
+        moutonamange.setTranslateY(150);
+        moutonamange.setStyle(
+                "-fx-background-color: #ffffff;" +
+                        "-fx-text-fill: #333333;" +
+                        "-fx-font-size: 30px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-background-color: #d2d0d0;" +
+                        "-fx-padding: 5 10 5 10;"
+        );
+
+
+        if (plateau.getMouton().getX() == plateau.getLoup().getX() && plateau.getMouton().getY() == plateau.getLoup().getY()){
+            stackPane.getChildren().clear();
+            Image image3 = new Image(Objects.requireNonNull(getClass().getResource("/LoupGagne.png")).toExternalForm());
+            ImageView backgroundView = new ImageView(image3);
+            backgroundView.setFitHeight(800);
+            backgroundView.setFitWidth(1600);
+
+            Button btn3 = new Button();
+
+            btn3.opacityProperty().setValue(0);
+            btn3.setTranslateX(0);
+            btn3.setTranslateY(300);
+            btn3.setPrefSize(400, 100);
+            btn3.setOnAction(e -> {
+                System.exit(0);
+            });
+
+            stackPane.getChildren().addAll(backgroundView,tour,btn3,moutonamange);
+
+        } else if (plateau.getMouton().getX() == plateau.getCaseFinal().getX() && plateau.getMouton().getY() == plateau.getCaseFinal().getY()) {
+            stackPane.getChildren().clear();
+            Image image3 = new Image(Objects.requireNonNull(getClass().getResource("/MoutonGagne.png")).toExternalForm());
+            ImageView backgroundView = new ImageView(image3);
+            backgroundView.setFitHeight(800);
+            backgroundView.setFitWidth(1600);
+
+            Button btn3 = new Button();
+
+            btn3.opacityProperty().setValue(0);
+            btn3.setTranslateX(0);
+            btn3.setTranslateY(300);
+            btn3.setPrefSize(400, 100);
+            btn3.setOnAction(e -> {
+                System.exit(0);
+            });
+            stackPane.getChildren().addAll(backgroundView,tour,btn3,moutonamange);
+        }
     }
 
 }

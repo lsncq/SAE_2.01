@@ -1,8 +1,6 @@
 package org.example.model;
 
-import java.io.RandomAccessFile;
 import java.util.*;
-import java.util.random.RandomGenerator;
 
 public class Mouton extends Animal{
 
@@ -92,30 +90,28 @@ public class Mouton extends Animal{
 
     private Case alea(ArrayList<Case> cases, double[] proba) {
         double p = Math.random();
-        double cumulative = 0.0;
+        double somme = 0.0;
         for (int j = 0; j < proba.length; j++) {
-            cumulative += proba[j];
-            if (p <= cumulative) {
+            somme += proba[j];
+            if (p <= somme) {
                 return cases.get(j);
             }
         }
-        // Fallback: return the last case if rounding errors occur
-        return cases.get(cases.size() - 1);
+        return cases.getLast();
     }
 
     public LinkedList<Case> fourmi() {
-        int width = plateau.length();
+        int length = plateau.length();
         int height = plateau.height();
-        double[][] pheromones = new double[width][height];
-        double alpha = 2.0;
-        double beta = 1.0;
-        double evaporation = 0.05;
-        int iterations = 100;
-        int nAnts = 5;
-        double Q = 1.0;
+        double[][] pheromones = new double[length][height];
+        double alpha = 1;
+        double evaporation = 0.001;
+        int iterations = 500;
+        int nAnts = 15;
+        double Q = 1;
 
-        // Initialize pheromones to 1
-        for (int i = 0; i < width; i++) {
+        // pheromones to 1
+        for (int i = 0; i < length; i++) {
             for (int j = 0; j < height; j++) {
                 pheromones[i][j] = 1.0;
             }
@@ -128,7 +124,7 @@ public class Mouton extends Animal{
             ArrayList<ArrayList<Case>> validPaths = new ArrayList<>();
 
             for (int ant = 0; ant < nAnts; ant++) {
-                Case current = plateau.getCase(x,y); // Use your method to get the start
+                Case current = plateau.getCase(x,y);
                 ArrayList<Case> path = new ArrayList<>();
                 HashSet<Case> visited = new HashSet<>();
                 path.add(current);
@@ -149,7 +145,6 @@ public class Mouton extends Animal{
                     double sum = 0.0;
                     for (int i = 0; i < availableNeighbors.size(); i++) {
                         Case neighbor = availableNeighbors.get(i);
-                        // η[i][j] = 1, so omitted
                         proba[i] = Math.pow(pheromones[neighbor.getX()][neighbor.getY()], alpha);
                         sum += proba[i];
                     }
@@ -157,7 +152,6 @@ public class Mouton extends Animal{
                         proba[i] /= sum;
                     }
 
-                    // Select next node
                     Case next = alea(availableNeighbors, proba);
                     path.add(next);
                     visited.add(next);
@@ -174,13 +168,13 @@ public class Mouton extends Animal{
             }
 
             // Evaporate pheromones
-            for (int i = 0; i < width; i++) {
+            for (int i = 0; i < length; i++) {
                 for (int j = 0; j < height; j++) {
                     pheromones[i][j] *= (1 - evaporation);
                 }
             }
 
-            // Update pheromones based on valid paths
+            // Update pheromones
             for (ArrayList<Case> path : validPaths) {
                 double delta = Q / path.size();
                 for (Case c : path) {
@@ -190,7 +184,6 @@ public class Mouton extends Animal{
         }
 
         if (bestPath == null) {
-            // No path found
             return new LinkedList<>();
         }
         return new LinkedList<>(bestPath);
