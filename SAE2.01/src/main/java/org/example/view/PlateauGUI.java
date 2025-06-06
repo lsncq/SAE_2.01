@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import org.example.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -184,7 +185,7 @@ public class PlateauGUI {
         }
         return resultat + ".";
     }
-    public void show() {
+    public void show(Boolean auto) {
         gridPane.setHgap(0);
         gridPane.setVgap(0);
         gridPane.setAlignment(Pos.BOTTOM_CENTER);
@@ -268,7 +269,11 @@ public class PlateauGUI {
         ));
         Valide.setOnMouseClicked(e -> {
             lequel = 0;
-            jeu();
+            if(auto){
+                jeuAuto();
+            }else{
+                jeu();
+            }
         });
         //afficher ce qui est sélectionné
         Label texte5 = new Label("Vous avez selectionné :");
@@ -510,7 +515,7 @@ public class PlateauGUI {
         Mouton m = plateau.getMouton();
         Loup l = plateau.getLoup();
         lequel = 10;
-        nbPas = 3;
+        nbPas = 2;
 
 
         stackPane.getChildren().clear();
@@ -524,6 +529,33 @@ public class PlateauGUI {
                 bouge(l,e.getCode(),texte);
             }
         });
+    }
+
+    public void jeuAuto(){
+        Image image = new Image(Objects.requireNonNull(getClass().getResource("/background.png")).toExternalForm());
+        ImageView backgroundView = new ImageView(image);
+        backgroundView.setFitWidth(1600);
+        backgroundView.setPreserveRatio(true);
+        stackPane.getChildren().clear();
+        stackPane.getChildren().addAll(backgroundView, gridPane);
+        ArrayList<Case> cases = new ArrayList<>(plateau.getMouton().fourmi());
+        scene.setOnKeyPressed(e -> {
+            fuite(cases);
+        });
+    }
+
+    public void fuite(ArrayList<Case> cases) {
+        Case c = cases.getFirst();
+        plateau.getMouton().deplace(c.getX(), c.getY());
+        displayAnimal();
+        cases.remove(c);
+    }
+
+    public void attack(ArrayList<Case> cases) {
+        Case c = cases.getFirst();
+        plateau.getLoup().deplace(c.getX(), c.getY());
+        displayAnimal();
+        cases.remove(c);
     }
 
 }

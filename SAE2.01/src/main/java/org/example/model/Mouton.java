@@ -14,7 +14,6 @@ public class Mouton extends Animal{
     }
 
     public boolean mange(){
-        System.out.println(fourmi());
         nourriture.add(plateau.getCase(x,y).getType());
         if (nourriture ==null || nourriture.getLast()==Element.Roche){
             return false;

@@ -1,9 +1,10 @@
 package org.example.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 
 public class Plateau {
 
@@ -91,6 +92,69 @@ public class Plateau {
             return cases[x][y];
         }
         else return null;
+    }
+
+    private Element scan(char s){
+        if (s == 'x'){
+            return Element.Roche;
+        }
+        else if (s == 'h'){
+            return Element.Herbe;
+        }
+        else if (s == 'f'){
+            return Element.Marguerite;
+        }
+        else if (s == 'c'){
+            return Element.Cactus;
+        }
+        else if (s == 'm'){
+            return Element.Herbe;
+        }
+        else if (s == 'l'){
+            return Element.Herbe;
+        }
+        else if (s == 's'){
+            return Element.Herbe;
+        }
+        else{
+            return Element.Roche;
+        }
+    }
+
+    public static Plateau taillePlateau(String name) {
+        int j = 0;
+        int i = 0;
+        try (Scanner scanner = new Scanner(new File(name))) {
+            while (scanner.hasNextLine()) {
+                j++;
+                i = scanner.nextLine().length();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Fichier non trouvé : " + e.getMessage());
+        }
+        return new Plateau(i,j);
+    }
+
+    public void lireFichier(String name){
+        try (Scanner scanner = new Scanner(new File(name))) {
+            for (int j = 0; j < height() ; j++) {
+                String element = scanner.nextLine();
+                for (int i = 0; i < length(); i++) {
+                    char e = element.charAt(i);
+                    cases[i][j].setType(scan(e));
+                    if (e == 'm') {
+                        mouton.deplace(i, j);
+                    } else if (e == 'l') {
+                        loup.deplace(i, j);
+                    }
+                    if (e == 's') {
+                        this.setCaseFinal(cases[i][j]);
+                    }
+                }
+            }
+            } catch (FileNotFoundException e) {
+            System.out.println("Fichier non trouvé : " + e.getMessage());
+        }
     }
 
     public String toString(){

@@ -10,9 +10,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.model.Plateau;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -210,6 +212,7 @@ public class Menu extends Stage {
         });
 
         btn3.setOnAction(event -> {
+            root.getChildren().clear();
 
             root.getChildren().addAll(backgroundView,tf,vbox,vbox2,vbox3);
 
@@ -217,8 +220,21 @@ public class Menu extends Stage {
 
         btn4.setOnAction(event -> {
             root.getChildren().clear();
-            root.getChildren().addAll(SimulationView,btn3);
-
+            root.getChildren().addAll(backgroundView,btn3);
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text Files", "*.txt");
+            fileChooser.getExtensionFilters().add(extFilter);
+            File file = fileChooser.showOpenDialog(null);
+            if (file == null) {
+                btn3.getOnAction().handle(null);
+            }else{
+                String path = file.getAbsolutePath();
+                Plateau plateau = Plateau.taillePlateau(path);
+                plateau.lireFichier(path);
+                PlateauGUI p = new PlateauGUI(plateau,root,scene);
+                p.show(true);
+            }
         });
 
         btn1.setOnAction(event -> {
@@ -234,7 +250,7 @@ public class Menu extends Stage {
             Plateau plateau = new Plateau(x,y);
             plateau.setCaseFinal(plateau.getCase(1,0));
             PlateauGUI p = new PlateauGUI(plateau,root,scene);
-            p.show();
+            p.show(false);
         });
 
 
