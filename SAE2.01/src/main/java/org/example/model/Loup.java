@@ -19,6 +19,20 @@ public class Loup extends Animal {
         return "Loup";
     }
 
+    public boolean attack(){
+        HashSet<Case> vision = new HashSet<>();
+        ArrayList<Case> cases = new ArrayList<>();
+        vision.add(plateau.getCase(x,y));
+        for (int i = 0; i < 5; i++){
+            for (Case c : vision){
+                cases.addAll(c.voisin());
+            }
+            vision.addAll(cases);
+        }
+        Case mouton = plateau.getCase(plateau.getMouton().getX(), plateau.getMouton().getY());
+        return vision.contains(mouton);
+    }
+
     public LinkedList<Case> pep(){
         LinkedList<Case> pile = new LinkedList<>();
         LinkedList<Case> cases = new LinkedList<>();
@@ -99,14 +113,13 @@ public class Loup extends Animal {
     }
 
 
-    public LinkedList<Case> fourmi() {
+    public LinkedList<Case> fourmi(int iterations) {
         int length = plateau.length();
         int height = plateau.height();
         double[][] pheromones = new double[length][height];
         double alpha = 1;
         double evaporation = 0.001;
-        int iterations = 500;
-        int nAnts = 15;
+        int nAnts = 20;
 
         // pheromones to 1
         for (int i = 0; i < length; i++) {

@@ -549,11 +549,11 @@ public class PlateauGUI {
         if (method.equals("Dijkstra")){
             cases = new ArrayList<>(plateau.getMouton().dijkstra());
         }else if (method.equals("Fourmi")){
-            cases = new ArrayList<>(plateau.getMouton().fourmi());
+            cases = new ArrayList<>(plateau.getMouton().fourmi(1000));
         }else if (method.equals("PEP")){
             cases = new ArrayList<>(plateau.getMouton().pep());
-        }else{
-            cases = new ArrayList<>(plateau.getMouton().pep());
+        }else {
+            cases = new ArrayList<>(plateau.getMouton().fourmi(3));
         }
     }
 
@@ -561,9 +561,11 @@ public class PlateauGUI {
         if (method.equals("Dijkstra")){
             cases = new ArrayList<>(plateau.getLoup().dijkstra());
         }else if (method.equals("Fourmi")){
-            cases = new ArrayList<>(plateau.getLoup().fourmi());
+            cases = new ArrayList<>(plateau.getLoup().fourmi(1000));
         }else if (method.equals("PEP")) {
             cases = new ArrayList<>(plateau.getLoup().pep());
+        }else{
+            cases = new ArrayList<>(plateau.getLoup().fourmi(3));
         }
     }
 
@@ -587,15 +589,72 @@ public class PlateauGUI {
         Loup l = plateau.getLoup();
         lequel = 10;
         nbPas = 2;
-        typeCheminMouton(method);
+        if (m.fuite()){
+            typeCheminMouton(method);
+        }else {
+            typeCheminMouton("Alea");
+        }
         cases.removeFirst();
         scene.setOnKeyPressed(e -> {
-            if ( lequel ==10 ){
+            if ( lequel ==10 && m.fuite()){
                 bougeAuto(m,texte,method);
-            }else if (lequel == 11){
+            }else if (lequel == 11 && l.attack()){
                 bougeAuto(l,texte,method);
+            }else if (lequel == 10){
+                bougeAlea(m,texte);
+            }else if (lequel == 11){
+                bougeAlea(l,texte);
             }
         });
+    }
+
+    public void bougeAlea( Animal a, Label text) {
+        Case c = cases.getFirst();
+        a.deplace(c.getX(), c.getY());
+        displayAnimal();
+        cases.remove(c);
+        nbPas--;
+        texte(text,a.toString(),nbPas);
+        if (a instanceof Mouton && nbPas == 0){
+            nbPas = 3;
+            lequel = 11;
+            texte(text,"Loup",nbPas);
+            a.mange();
+            typeCheminLoup("alea");
+            cases.removeFirst();
+        }else if (a instanceof Loup && nbPas == 0){
+            nbPas = plateau.getMouton().getNbCase();
+            lequel = 10;
+            texte(text,"Mouton",nbPas);
+            nbTours++;
+            typeCheminMouton("alea");
+            cases.removeFirst();
+        }
+        //afficher le nombre de tours
+        Label tour = new Label("Vous avez fini le jeu en "+nbTours+" tours");
+        if (nbTours == 1){tour.setText("Vous avez fini le jeu en "+nbTours+" tour");};
+        tour.setTranslateY(200);
+        tour.setStyle(
+                "-fx-background-color: #ffffff;" +
+                        "-fx-text-fill: #333333;" +
+                        "-fx-font-size: 30px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-background-color: #d2d0d0;" +
+                        "-fx-padding: 5 10 5 10;"
+        );
+
+
+        //affiche ce que le mouton a mangé
+        Label moutonamange = new Label("Le mouton a mangé : "+enPhrase(plateau.getMouton().getNourriture()));
+        moutonamange.setTranslateY(150);
+        moutonamange.setStyle(
+                "-fx-background-color: #ffffff;" +
+                        "-fx-text-fill: #333333;" +
+                        "-fx-font-size: 30px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-background-color: #d2d0d0;" +
+                        "-fx-padding: 5 10 5 10;"
+        );
     }
 
     public void bougeAuto( Animal a, Label text,String method) {
