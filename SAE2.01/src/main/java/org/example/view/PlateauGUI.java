@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import org.example.model.*;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -235,6 +237,14 @@ public class PlateauGUI {
         loup.setFitWidth(50);
         loup.setFitHeight(50);
         Button Valide = new Button("Valide");
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll("Dijkstra", "PEP", "Fourmi", "A*");
+        comboBox.setPromptText("Choisissez un algorithme");
+        comboBox.setEditable(true);
+        comboBox.setTranslateX(350);
+        comboBox.setTranslateY(-300);
+
+
         valide = Valide;
         //bouton validé pour lancer le jeu
         Valide.setPrefSize(200, 60);
@@ -271,7 +281,7 @@ public class PlateauGUI {
         Valide.setOnMouseClicked(e -> {
             lequel = 0;
             if(auto){
-                jeuAuto();
+                jeuAuto(comboBox.getValue());
             }else{
                 jeu();
             }
@@ -357,10 +367,13 @@ public class PlateauGUI {
 
         for (Case c : plateau.getAllCases()) {
             choisi(c);
-            }
+        }
 
         stackPane.getChildren().add(gridPane);
         stackPane.getChildren().addAll(roche,herbe,cactus,marguerite,sortie,mouton,loup,Valide,texte5,texte6);
+        if (auto){
+            stackPane.getChildren().add(comboBox);
+        }
         displayAnimal();
 
 
@@ -532,7 +545,29 @@ public class PlateauGUI {
         });
     }
 
-    public void jeuAuto(){
+    private void typeCheminMouton(String method){
+        if (method.equals("Dijkstra")){
+            cases = new ArrayList<>(plateau.getMouton().dijkstra());
+        }else if (method.equals("Fourmi")){
+            cases = new ArrayList<>(plateau.getMouton().fourmi());
+        }else if (method.equals("PEP")){
+            cases = new ArrayList<>(plateau.getMouton().pep());
+        }else{
+            cases = new ArrayList<>(plateau.getMouton().pep());
+        }
+    }
+
+    private void typeCheminLoup(String method){
+        if (method.equals("Dijkstra")){
+            cases = new ArrayList<>(plateau.getLoup().dijkstra());
+        }else if (method.equals("Fourmi")){
+            cases = new ArrayList<>(plateau.getLoup().fourmi());
+        }else if (method.equals("PEP")) {
+            cases = new ArrayList<>(plateau.getLoup().pep());
+        }
+    }
+
+    public void jeuAuto(String method){
         Image image = new Image(Objects.requireNonNull(getClass().getResource("/background.png")).toExternalForm());
         ImageView backgroundView = new ImageView(image);
         backgroundView.setFitWidth(1600);
@@ -552,19 +587,18 @@ public class PlateauGUI {
         Loup l = plateau.getLoup();
         lequel = 10;
         nbPas = 2;
-        cases = new ArrayList<>(plateau.getMouton().fourmi());
+        typeCheminMouton(method);
         cases.removeFirst();
         scene.setOnKeyPressed(e -> {
             if ( lequel ==10 ){
-                bougeAuto(m,texte);
+                bougeAuto(m,texte,method);
             }else if (lequel == 11){
-                bougeAuto(l,texte);
+                bougeAuto(l,texte,method);
             }
-            System.out.println("la ");
         });
     }
 
-    public void bougeAuto( Animal a, Label text) {
+    public void bougeAuto( Animal a, Label text,String method) {
         Case c = cases.getFirst();
         a.deplace(c.getX(), c.getY());
         displayAnimal();
@@ -576,14 +610,14 @@ public class PlateauGUI {
             lequel = 11;
             texte(text,"Loup",nbPas);
             a.mange();
-            cases = new ArrayList<>(plateau.getLoup().fourmi());
+            typeCheminLoup(method);
             cases.removeFirst();
         }else if (a instanceof Loup && nbPas == 0){
             nbPas = plateau.getMouton().getNbCase();
             lequel = 10;
             texte(text,"Mouton",nbPas);
             nbTours++;
-            this.cases = new ArrayList<>(plateau.getMouton().fourmi());
+            typeCheminMouton(method);
             cases.removeFirst();
         }
         //afficher le nombre de tours

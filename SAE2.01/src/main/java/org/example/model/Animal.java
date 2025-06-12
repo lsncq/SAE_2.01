@@ -33,8 +33,6 @@ public abstract class Animal {
 
     public abstract LinkedList<Case> pep();
 
-    public abstract LinkedList<Case> pel();
-
     public abstract LinkedList<Case> dijkstra();
 
     public abstract LinkedList<Case> fourmi();

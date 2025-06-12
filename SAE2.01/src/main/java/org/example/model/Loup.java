@@ -46,35 +46,44 @@ public class Loup extends Animal {
         return pile;
     }
 
-    public LinkedList<Case> pel(){
-        LinkedList<Case> file = new LinkedList<>();
-        LinkedList<Case> cases = new LinkedList<>();
-        Case current = plateau.getCase(x, y);
-        cases.add(current);
-        file.add(current);
-        Case caseMouton = plateau.getCase(plateau.getMouton().getX(), plateau.getMouton().getY());
-        while (current != caseMouton) {
-            LinkedList<Case> voisins = new LinkedList<>();
-
-            for (Case neighbor : current.voisin()) {
-                if (!cases.contains(neighbor)) {
-                    voisins.add(neighbor);
-                }
-            }
-            if (!voisins.isEmpty()) {
-                current = voisins.getLast();
-                cases.add(current);
-                file.add(current);
-            }else {
-                file.removeFirst();
-                current = file.getFirst();
+    public LinkedList<Case> dijkstra() {
+        Case depart = plateau.getCase(x, y);
+        Case arrivee = plateau.getCase(plateau.getMouton().getX(), plateau.getMouton().getY());
+        int length = plateau.length();
+        int height = plateau.height();
+        int[][] distance = new int[length][height];
+        Case[][] precedent = new Case[length][height];
+        for (int i = 0; i < length; i++){
+            for (int j = 0; j < height; j++){
+                distance[i][j] = Integer.MAX_VALUE;
             }
         }
-        return file;
-    }
+        distance[depart.getX()][depart.getY()] = 0;
 
-    public LinkedList<Case> dijkstra(){
-        return null;
+        LinkedList<Case> queue = new LinkedList<>();
+        queue.add(depart);
+
+        while (!queue.isEmpty()) {
+            Case current = queue.poll();
+            for (Case voisin : current.voisin()) {
+                int d = distance[current.getX()][current.getY()] + 1;
+                if (d < distance[voisin.getX()][voisin.getY()]) {
+
+                    distance[voisin.getX()][voisin.getY()] = d;
+                    precedent[voisin.getX()][voisin.getY()] = current;
+                    queue.add(voisin);
+
+                }
+            }
+        }
+        // Reconstruction du chemin
+        LinkedList<Case> chemin = new LinkedList<>();
+        Case c = arrivee;
+        while (c != null) {
+            chemin.addFirst(c);
+            c = precedent[c.getX()][c.getY()];
+        }
+        return chemin;
     }
 
     private Case alea(ArrayList<Case> cases, double[] proba) {
