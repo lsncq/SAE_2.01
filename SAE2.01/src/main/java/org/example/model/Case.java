@@ -1,7 +1,6 @@
 package org.example.model;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Case {
 
@@ -68,6 +67,14 @@ public class Case {
         } else {
             return false;
         }
+    }
+
+    public int compareM() {
+        return plateau.distanceM(x, y);
+    }
+
+    public int compareL() {
+        return plateau.distanceL(x, y);
     }
 
 }

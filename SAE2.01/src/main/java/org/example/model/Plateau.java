@@ -2,8 +2,6 @@ package org.example.model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 
 public class Plateau {
@@ -180,5 +178,13 @@ public class Plateau {
     }
     public Case getCaseFinal() {
         return caseFinal;
+    }
+
+    public int distanceM(int x, int y) {
+        return Math.abs(x - caseFinal.getX()) + Math.abs(y - caseFinal.getY());
+    }
+
+    public int distanceL(int x, int y) {
+        return Math.abs(x - mouton.getX()) + Math.abs(y - mouton.getY());
     }
 }

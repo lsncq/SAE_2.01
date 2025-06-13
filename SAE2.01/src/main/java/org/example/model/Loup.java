@@ -1,6 +1,7 @@
 package org.example.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -100,6 +101,47 @@ public class Loup extends Animal {
         return chemin;
     }
 
+    public LinkedList<Case> AStar() {
+        Case depart = plateau.getCase(x, y);
+        Case arrivee = plateau.getCase(plateau.getMouton().getX(), plateau.getMouton().getY());
+        int length = plateau.length();
+        int height = plateau.height();
+        int[][] distance = new int[length][height];
+        Case[][] precedent = new Case[length][height];
+        for (int i = 0; i < length; i++){
+            for (int j = 0; j < height; j++){
+                distance[i][j] = Integer.MAX_VALUE;
+            }
+        }
+        distance[depart.getX()][depart.getY()] = 0;
+
+        LinkedList<Case> queue = new LinkedList<>();
+        queue.add(depart);
+
+        while (!queue.isEmpty()) {
+            queue.sort(Comparator.comparing(Case::compareL));//changement par rapport a dijkstra
+            Case current = queue.pollFirst();
+            for (Case voisin : current.voisin()) {
+                int d = distance[current.getX()][current.getY()] + 1;
+                if (d < distance[voisin.getX()][voisin.getY()]) {
+
+                    distance[voisin.getX()][voisin.getY()] = d;
+                    precedent[voisin.getX()][voisin.getY()] = current;
+                    queue.add(voisin);
+
+                }
+            }
+        }
+        // Reconstruction du chemin
+        LinkedList<Case> chemin = new LinkedList<>();
+        Case c = arrivee;
+        while (c != null) {
+            chemin.addFirst(c);
+            c = precedent[c.getX()][c.getY()];
+        }
+        return chemin;
+    }
+
     private Case alea(ArrayList<Case> cases, double[] proba) {
         double p = Math.random();
         double somme = 0.0;
@@ -119,7 +161,7 @@ public class Loup extends Animal {
         double[][] pheromones = new double[length][height];
         double alpha = 1;
         double evaporation = 0.001;
-        int nAnts = 20;
+        int nAnts = 25;
 
         // pheromones to 1
         for (int i = 0; i < length; i++) {

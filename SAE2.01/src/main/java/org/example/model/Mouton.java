@@ -112,6 +112,49 @@ public class Mouton extends Animal{
         return chemin;
     }
 
+    public LinkedList<Case> AStar() {
+        Case depart = plateau.getCase(x, y);
+        Case arrivee = plateau.getCaseFinal();
+        int length = plateau.length();
+        int height = plateau.height();
+        int[][] distance = new int[length][height];
+        Case[][] precedent = new Case[length][height];
+        for (int i = 0; i < length; i++){
+            for (int j = 0; j < height; j++){
+                distance[i][j] = Integer.MAX_VALUE;
+            }
+        }
+        distance[depart.getX()][depart.getY()] = 0;
+
+        LinkedList<Case> queue = new LinkedList<>();
+        queue.add(depart);
+        Case current = queue.getFirst();
+
+        while (!current.equals(arrivee)) {
+            queue.sort(Comparator.comparing(Case::compareM));
+            current = queue.pollFirst();
+            for (Case voisin : current.voisin()) {
+                int d = distance[current.getX()][current.getY()] + 1;
+                if (d < distance[voisin.getX()][voisin.getY()]) {
+
+                    distance[voisin.getX()][voisin.getY()] = d;
+                    precedent[voisin.getX()][voisin.getY()] = current;
+                    queue.add(voisin);
+
+                }
+            }
+        }
+
+        // Reconstruction du chemin
+        LinkedList<Case> chemin = new LinkedList<>();
+        Case c = arrivee;
+        while (c != null) {
+            chemin.addFirst(c);
+            c = precedent[c.getX()][c.getY()];
+        }
+        return chemin;
+    }
+
     public Case alea(ArrayList<Case> cases, double[] proba) {
         double p = Math.random();
         double somme = 0.0;
@@ -130,13 +173,20 @@ public class Mouton extends Animal{
         double[][] pheromones = new double[length][height];
         double alpha = 1;
         double evaporation = 0.001;
-        int nAnts = 20;
-        double Q = 1;
+        int nAnts = 25;
 
-        // pheromones to 1
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < height; j++) {
-                pheromones[i][j] = 1.0;
+                Case c = plateau.getCase(i, j);
+                if (c.getType().equals(Element.Herbe)){
+                    pheromones[i][j] = 1;
+                }else if (c.getType().equals(Element.Cactus)){
+                    pheromones[i][j] = 0.5;
+                }else if(c.getType().equals(Element.Marguerite)){
+                    pheromones[i][j] = 2;
+                }else if(c.getType().equals(Element.Roche)){
+                    pheromones[i][j] = 0;
+                }
             }
         }
 
@@ -199,7 +249,7 @@ public class Mouton extends Animal{
 
             // Update pheromones
             for (ArrayList<Case> path : validPaths) {
-                double delta = Q / path.size();
+                double delta = 1.0 / path.size();
                 for (Case c : path) {
                     pheromones[c.getX()][c.getY()] += delta;
                 }

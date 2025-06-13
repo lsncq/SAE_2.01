@@ -238,11 +238,18 @@ public class PlateauGUI {
         loup.setFitHeight(50);
         Button Valide = new Button("Valide");
         ComboBox<String> comboBox = new ComboBox<>();
-        comboBox.getItems().addAll("Dijkstra", "PEP", "Fourmi", "A*");
-        comboBox.setPromptText("Choisissez un algorithme");
+        comboBox.getItems().addAll("Dijkstra", "PEP", "Fourmi", "AStar");
+        comboBox.setPromptText("Algorithme du Mouton");
         comboBox.setEditable(true);
         comboBox.setTranslateX(350);
         comboBox.setTranslateY(-300);
+
+        ComboBox<String> comboBox2 = new ComboBox<>();
+        comboBox2.getItems().addAll("Dijkstra", "PEP", "Fourmi", "AStar");
+        comboBox2.setPromptText("Algorithme du Loup");
+        comboBox2.setEditable(true);
+        comboBox2.setTranslateX(625);
+        comboBox2.setTranslateY(-300);
 
 
         valide = Valide;
@@ -281,7 +288,7 @@ public class PlateauGUI {
         Valide.setOnMouseClicked(e -> {
             lequel = 0;
             if(auto){
-                jeuAuto(comboBox.getValue());
+                jeuAuto(comboBox.getValue(), comboBox2.getValue());
             }else{
                 jeu();
             }
@@ -372,7 +379,7 @@ public class PlateauGUI {
         stackPane.getChildren().add(gridPane);
         stackPane.getChildren().addAll(roche,herbe,cactus,marguerite,sortie,mouton,loup,Valide,texte5,texte6);
         if (auto){
-            stackPane.getChildren().add(comboBox);
+            stackPane.getChildren().addAll(comboBox,comboBox2);
         }
         displayAnimal();
 
@@ -549,11 +556,13 @@ public class PlateauGUI {
         if (method.equals("Dijkstra")){
             cases = new ArrayList<>(plateau.getMouton().dijkstra());
         }else if (method.equals("Fourmi")){
-            cases = new ArrayList<>(plateau.getMouton().fourmi(1000));
+            cases = new ArrayList<>(plateau.getMouton().fourmi(1500));
         }else if (method.equals("PEP")){
             cases = new ArrayList<>(plateau.getMouton().pep());
+        }else if (method.equals("AStar")){
+            cases = new ArrayList<>(plateau.getMouton().AStar());
         }else {
-            cases = new ArrayList<>(plateau.getMouton().fourmi(3));
+            cases = new ArrayList<>(plateau.getMouton().fourmi(15));
         }
     }
 
@@ -561,15 +570,17 @@ public class PlateauGUI {
         if (method.equals("Dijkstra")){
             cases = new ArrayList<>(plateau.getLoup().dijkstra());
         }else if (method.equals("Fourmi")){
-            cases = new ArrayList<>(plateau.getLoup().fourmi(1000));
+            cases = new ArrayList<>(plateau.getLoup().fourmi(1500));
         }else if (method.equals("PEP")) {
             cases = new ArrayList<>(plateau.getLoup().pep());
-        }else{
-            cases = new ArrayList<>(plateau.getLoup().fourmi(3));
+        }else if (method.equals("AStar")) {
+            cases = new ArrayList<>(plateau.getLoup().AStar());
+        } else{
+            cases = new ArrayList<>(plateau.getLoup().fourmi(15));
         }
     }
 
-    public void jeuAuto(String method){
+    public void jeuAuto(String methodMouton, String methodLoup){
         Image image = new Image(Objects.requireNonNull(getClass().getResource("/background.png")).toExternalForm());
         ImageView backgroundView = new ImageView(image);
         backgroundView.setFitWidth(1600);
@@ -590,16 +601,16 @@ public class PlateauGUI {
         lequel = 10;
         nbPas = 2;
         if (m.fuite()){
-            typeCheminMouton(method);
+            typeCheminMouton(methodMouton);
         }else {
             typeCheminMouton("Alea");
         }
         cases.removeFirst();
         scene.setOnKeyPressed(e -> {
             if ( lequel ==10 && m.fuite()){
-                bougeAuto(m,texte,method);
+                bougeAuto(m,texte,methodMouton);
             }else if (lequel == 11 && l.attack()){
-                bougeAuto(l,texte,method);
+                bougeAuto(l,texte,methodLoup);
             }else if (lequel == 10){
                 bougeAlea(m,texte);
             }else if (lequel == 11){
