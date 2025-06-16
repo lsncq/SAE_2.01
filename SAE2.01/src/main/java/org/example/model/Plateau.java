@@ -12,7 +12,7 @@ public class Plateau {
     private Loup loup;
 
     public Plateau() {
-        this(3,3);
+        this(10,7);
     }
 
     public Plateau(int nbX, int nbY) {

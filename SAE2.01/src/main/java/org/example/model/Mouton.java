@@ -31,7 +31,8 @@ public class Mouton extends Animal{
     }
 
     public boolean fuite(){
-        HashSet<Case> vision = new HashSet<>();
+        //La vision prend en compte les obstacles
+        HashSet<Case> vision = new HashSet<>(); // le set evite les doublons
         ArrayList<Case> cases = new ArrayList<>();
         vision.add(plateau.getCase(x,y));
         for (int i = 0; i < 5; i++){
@@ -77,10 +78,10 @@ public class Mouton extends Animal{
         int length = plateau.length();
         int height = plateau.height();
         int[][] distance = new int[length][height];
-        Case[][] precedent = new Case[length][height];
+        Case[][] precedent = new Case[length][height]; // Ce tableau nous permettera d'obtenir le chemin
         for (int i = 0; i < length; i++){
             for (int j = 0; j < height; j++){
-                distance[i][j] = Integer.MAX_VALUE;
+                distance[i][j] = Integer.MAX_VALUE; // Integer.MAX_VALUE nous permet d'obtenir la plus grande valeur possible , facilitant ainsi le choix du minimum
             }
         }
         distance[depart.getX()][depart.getY()] = 0;
@@ -117,6 +118,7 @@ public class Mouton extends Animal{
         Case arrivee = plateau.getCaseFinal();
         int length = plateau.length();
         int height = plateau.height();
+        int intervale = 0;
         int[][] distance = new int[length][height];
         Case[][] precedent = new Case[length][height];
         for (int i = 0; i < length; i++){
@@ -131,7 +133,10 @@ public class Mouton extends Animal{
         Case current = queue.getFirst();
 
         while (!current.equals(arrivee)) {
-            queue.sort(Comparator.comparing(Case::compareM));
+            if (intervale %3 == 0){ //  Evite de tombe sur un chemin trop rapidement , qui ne surestime pas la distance
+                queue.sort(Comparator.comparing(Case::compareM));//changement par rapport a dijkstra
+            }
+            intervale++;
             current = queue.pollFirst();
             for (Case voisin : current.voisin()) {
                 int d = distance[current.getX()][current.getY()] + 1;
@@ -172,12 +177,12 @@ public class Mouton extends Animal{
         int height = plateau.height();
         double[][] pheromones = new double[length][height];
         double alpha = 1;
-        double evaporation = 0.001;
+        double evaporation = 0.0005;
         int nAnts = 25;
 
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < height; j++) {
-                Case c = plateau.getCase(i, j);
+                Case c = plateau.getCase(i, j); // On ajuste les pheromones par rapport au type de la case
                 if (c.getType().equals(Element.Herbe)){
                     pheromones[i][j] = 1;
                 }else if (c.getType().equals(Element.Cactus)){
@@ -190,11 +195,11 @@ public class Mouton extends Animal{
             }
         }
 
-        ArrayList<Case> bestPath = null;
-        int bestLength = Integer.MAX_VALUE;
+        ArrayList<Case> meilleurChemin = null;
+        int meilleurLongueur = Integer.MAX_VALUE;
 
         for (int iter = 0; iter < iterations; iter++) {
-            ArrayList<ArrayList<Case>> validPaths = new ArrayList<>();
+            ArrayList<ArrayList<Case>> lesChemins = new ArrayList<>();
 
             for (int ant = 0; ant < nAnts; ant++) {
                 Case current = plateau.getCase(x,y);
@@ -232,10 +237,10 @@ public class Mouton extends Animal{
                 }
 
                 if (current.equals(plateau.getCaseFinal())) {
-                    validPaths.add(path);
-                    if (path.size() < bestLength) {
-                        bestLength = path.size();
-                        bestPath = new ArrayList<>(path);
+                    lesChemins.add(path);
+                    if (path.size() < meilleurLongueur) {
+                        meilleurLongueur = path.size();
+                        meilleurChemin = new ArrayList<>(path);
                     }
                 }
             }
@@ -248,7 +253,7 @@ public class Mouton extends Animal{
             }
 
             // Update pheromones
-            for (ArrayList<Case> path : validPaths) {
+            for (ArrayList<Case> path : lesChemins) {
                 double delta = 1.0 / path.size();
                 for (Case c : path) {
                     pheromones[c.getX()][c.getY()] += delta;
@@ -256,10 +261,10 @@ public class Mouton extends Animal{
             }
         }
 
-        if (bestPath == null) {
+        if (meilleurChemin == null) {
             return new LinkedList<>();
         }
-        return new LinkedList<>(bestPath);
+        return new LinkedList<>(meilleurChemin);
     }
 
 }

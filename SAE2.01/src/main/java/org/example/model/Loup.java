@@ -106,6 +106,7 @@ public class Loup extends Animal {
         Case arrivee = plateau.getCase(plateau.getMouton().getX(), plateau.getMouton().getY());
         int length = plateau.length();
         int height = plateau.height();
+        int intervale = 0;
         int[][] distance = new int[length][height];
         Case[][] precedent = new Case[length][height];
         for (int i = 0; i < length; i++){
@@ -119,7 +120,10 @@ public class Loup extends Animal {
         queue.add(depart);
 
         while (!queue.isEmpty()) {
-            queue.sort(Comparator.comparing(Case::compareL));//changement par rapport a dijkstra
+            if (intervale %3 == 0){
+                queue.sort(Comparator.comparing(Case::compareL));//changement par rapport a dijkstra
+            }
+            intervale++;
             Case current = queue.pollFirst();
             for (Case voisin : current.voisin()) {
                 int d = distance[current.getX()][current.getY()] + 1;
