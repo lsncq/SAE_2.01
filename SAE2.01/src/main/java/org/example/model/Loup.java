@@ -62,43 +62,43 @@ public class Loup extends Animal {
     }
 
     public LinkedList<Case> dijkstra() {
-        Case depart = plateau.getCase(x, y);
-        Case arrivee = plateau.getCase(plateau.getMouton().getX(), plateau.getMouton().getY());
-        int length = plateau.length();
-        int height = plateau.height();
-        int[][] distance = new int[length][height];
-        Case[][] precedent = new Case[length][height];
+        Case depart = plateau.getCase(x, y); // Position du Loup
+        Case arrivee = plateau.getCase(plateau.getMouton().getX(), plateau.getMouton().getY()); // Position du mouton
+        int length = plateau.length(); // Dimension du plateau
+        int height = plateau.height(); // Dimension du plateau
+        int[][] distance = new int[length][height]; // Création d'un tableau vide
+        Case[][] precedent = new Case[length][height]; // Ce tableau nous permettera d'obtenir le chemin
         for (int i = 0; i < length; i++){
             for (int j = 0; j < height; j++){
-                distance[i][j] = Integer.MAX_VALUE;
+                distance[i][j] = Integer.MAX_VALUE; // Integer.MAX_VALUE nous permet d'obtenir la plus grande valeur possible , facilitant ainsi le choix du minimum
             }
         }
-        distance[depart.getX()][depart.getY()] = 0;
+        distance[depart.getX()][depart.getY()] = 0; // départ à 0 car position du loup
 
-        LinkedList<Case> queue = new LinkedList<>();
-        queue.add(depart);
+        LinkedList<Case> queue = new LinkedList<>(); // Initialisation d'une file pour contenir des cases à visiter
+        queue.add(depart); // ajout de la case départ
 
-        while (!queue.isEmpty()) {
-            Case current = queue.poll();
-            for (Case voisin : current.voisin()) {
-                int d = distance[current.getX()][current.getY()] + 1;
-                if (d < distance[voisin.getX()][voisin.getY()]) {
+        while (!queue.isEmpty()) { // Tant qu'il reste des cases à explorer
+            Case current = queue.poll(); // On récupère et on enlève la première cade de la file
+            for (Case voisin : current.voisin()) { // Pour chaque voisin (haut, gauche, bas, droit)
+                int d = distance[current.getX()][current.getY()] + 1; // On récupère la distance pour aller à ce voisin, chaque déplacement coûte 1
+                if (d < distance[voisin.getX()][voisin.getY()]) { // Si on trouve un chemin plus court pour aller à ce voisin
 
-                    distance[voisin.getX()][voisin.getY()] = d;
-                    precedent[voisin.getX()][voisin.getY()] = current;
-                    queue.add(voisin);
+                    distance[voisin.getX()][voisin.getY()] = d; // alors on met a jour la distance minimale connue
+                    precedent[voisin.getX()][voisin.getY()] = current; // On enregistre que pour aller à ce voisin il faut être sur la case current
+                    queue.add(voisin); // On ajoute le voisin à la file
 
                 }
             }
         }
         // Reconstruction du chemin
-        LinkedList<Case> chemin = new LinkedList<>();
-        Case c = arrivee;
+        LinkedList<Case> chemin = new LinkedList<>(); // Création d'une nouvelle liste pour le chemin final
+        Case c = arrivee; // On commence le chemin par la case d'arrivée
         while (c != null) {
-            chemin.addFirst(c);
-            c = precedent[c.getX()][c.getY()];
+            chemin.addFirst(c); // On ajoute chaque case au début de la liste
+            c = precedent[c.getX()][c.getY()]; // On remonte le chemin en suivant  jusqu'à revenir au point de départ
         }
-        return chemin;
+        return chemin; // On retourne le chemin final
     }
 
     public LinkedList<Case> AStar() {
