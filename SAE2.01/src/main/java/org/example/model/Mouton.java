@@ -114,37 +114,37 @@ public class Mouton extends Animal{
     }
 
     public LinkedList<Case> AStar() {
-        Case depart = plateau.getCase(x, y);
-        Case arrivee = plateau.getCaseFinal();
-        int length = plateau.length();
-        int height = plateau.height();
+        Case depart = plateau.getCase(x, y); // Position du mouton
+        Case arrivee = plateau.getCaseFinal(); // Position de la sortie
+        int length = plateau.length(); // Dimension du plateau
+        int height = plateau.height(); // Dimension du plateau
         int intervale = 0;
-        int[][] distance = new int[length][height];
-        Case[][] precedent = new Case[length][height];
+        int[][] distance = new int[length][height]; // Création d'un tableau vide
+        Case[][] precedent = new Case[length][height]; // Ce tableau nous permettera d'obtenir le chemin
         for (int i = 0; i < length; i++){
             for (int j = 0; j < height; j++){
-                distance[i][j] = Integer.MAX_VALUE;
+                distance[i][j] = Integer.MAX_VALUE; // Integer.MAX_VALUE nous permet d'obtenir la plus grande valeur possible , facilitant ainsi le choix du minimum
             }
         }
-        distance[depart.getX()][depart.getY()] = 0;
+        distance[depart.getX()][depart.getY()] = 0; // départ à 0 car position du mouton
 
-        LinkedList<Case> queue = new LinkedList<>();
-        queue.add(depart);
-        Case current = queue.getFirst();
+        LinkedList<Case> queue = new LinkedList<>(); // Initialisation d'une file pour contenir des cases à visiter
+        queue.add(depart); // ajout de la case départ
+        Case current = queue.getFirst(); // obtenir le premier de la liste
 
         while (!current.equals(arrivee)) {
-            if (intervale %3 == 0){ //  Evite de tombe sur un chemin trop rapidement , qui ne surestime pas la distance
-                queue.sort(Comparator.comparing(Case::compareM));//changement par rapport a dijkstra
+            if (intervale %3 == 0){ //  Evite de tombe sur un chemin trop rapidement, qui ne surestime pas la distance
+                queue.sort(Comparator.comparing(Case::compareM));//changement par rapport a dijkstra, compare pour trouver le poids minimum
             }
-            intervale++;
-            current = queue.pollFirst();
+            intervale++; // incrémente intervale
+            current = queue.pollFirst(); // supprime le premier de la liste
             for (Case voisin : current.voisin()) {
-                int d = distance[current.getX()][current.getY()] + 1;
-                if (d < distance[voisin.getX()][voisin.getY()]) {
+                int d = distance[current.getX()][current.getY()] + 1; // On récupère la distance pour aller à ce voisin, chaque déplacement coûte 1
+                if (d < distance[voisin.getX()][voisin.getY()]) { // Si on trouve un chemin plus court pour aller à ce voisin
 
-                    distance[voisin.getX()][voisin.getY()] = d;
-                    precedent[voisin.getX()][voisin.getY()] = current;
-                    queue.add(voisin);
+                    distance[voisin.getX()][voisin.getY()] = d; // alors on met a jour la distance minimale connue
+                    precedent[voisin.getX()][voisin.getY()] = current; // On enregistre que pour aller à ce voisin il faut être sur la case current
+                    queue.add(voisin); // On ajoute le voisin à la file
 
                 }
             }
