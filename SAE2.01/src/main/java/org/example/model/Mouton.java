@@ -161,6 +161,7 @@ public class Mouton extends Animal{
     }
 
     public Case alea(ArrayList<Case> cases, double[] proba) {
+        //Permet de choisir aleatoirement une case parmi une liste de case , avec leur probabilités respective
         double p = Math.random();
         double somme = 0.0;
         for (int j = 0; j < proba.length; j++) {
@@ -175,8 +176,8 @@ public class Mouton extends Animal{
     public LinkedList<Case> fourmi(int iterations) {
         int length = plateau.length();
         int height = plateau.height();
-        double[][] pheromones = new double[length][height];
-        double alpha = 1;
+        double[][] pheromones = new double[length][height]; // Tableau de pheromones , indique la probabilités de tombé sur la case
+        double alpha = 1; // Contrôle l’importance relative de l’intensité et de la visibilité d’une arête.
         double evaporation = 0.0005;
         int nAnts = 25;
 

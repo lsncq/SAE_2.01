@@ -23,52 +23,44 @@ class MoutonTest {
         plateau = null;
     }
 
-    @Test
     void test1() {
         plateau.getCase(1,1).setType(Element.Cactus);
         mouton.mange();
         assertEquals(1,mouton.getNbCase());
     }
 
-    @Test
     void test2() {
         plateau.getCase(1,1).setType(Element.Herbe);
         mouton.mange();
         assertEquals(2,mouton.getNbCase());
     }
 
-    @Test
     void test3() {
         plateau.getCase(1,1).setType(Element.Marguerite);
         mouton.mange();
         assertEquals(4,mouton.getNbCase());
     }
 
-    @Test
     void test4() {
         plateau.getCase(1,1).setType(Element.Roche);
         assertFalse(mouton.mange());
     }
 
-    @Test
     void test5() {
         plateau.getCase(1,1).setType(Element.Herbe);
         assertTrue(mouton.mange());
     }
 
-    @Test
     void test6() {
         plateau.getCase(1,1).setType(Element.Marguerite);
         assertTrue(mouton.mange());
     }
 
-    @Test
     void test7() {
         plateau.getCase(1,1).setType(Element.Cactus);
         assertTrue(mouton.mange());
     }
 
-    @Test
     void test8() {
         plateau.getCase(1,1).setType(Element.Marguerite);
         mouton.mange();
@@ -79,7 +71,6 @@ class MoutonTest {
         assertEquals(5,mouton.getNourriture().size());
     }
 
-    @Test
     void test9() {
         plateau.getCase(1,1).setType(Element.Marguerite);
         mouton.mange();

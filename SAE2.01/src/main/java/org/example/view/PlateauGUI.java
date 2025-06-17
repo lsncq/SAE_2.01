@@ -288,7 +288,7 @@ public class PlateauGUI {
         Valide.setOnMouseClicked(e -> {
             lequel = 0;
             if(auto){
-                jeuAuto(comboBox.getValue(), comboBox2.getValue());
+                jeuAuto(comboBox2.getValue(),comboBox.getValue());
             }else{
                 jeu();
             }
@@ -666,6 +666,24 @@ public class PlateauGUI {
                         "-fx-background-color: #d2d0d0;" +
                         "-fx-padding: 5 10 5 10;"
         );
+        if (plateau.getMouton().getX() == plateau.getCaseFinal().getX() && plateau.getMouton().getY() == plateau.getCaseFinal().getY()) {
+            stackPane.getChildren().clear();
+            Image image3 = new Image(Objects.requireNonNull(getClass().getResource("/MoutonGagne.png")).toExternalForm());
+            ImageView backgroundView = new ImageView(image3);
+            backgroundView.setFitHeight(800);
+            backgroundView.setFitWidth(1600);
+
+            Button btn3 = new Button();
+
+            btn3.opacityProperty().setValue(0);
+            btn3.setTranslateX(0);
+            btn3.setTranslateY(300);
+            btn3.setPrefSize(400, 100);
+            btn3.setOnAction(e -> {
+                System.exit(0);
+            });
+            stackPane.getChildren().addAll(backgroundView,tour,btn3,moutonamange);
+        }
     }
 
     public void bougeAuto( Animal a, Label text,String method) {
