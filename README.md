@@ -50,6 +50,6 @@ mvn test
 - M. BAY Thierry
 
 ## 📃 Droits
-Les éléments présents graphiques présents dans le jeu (mouton, loup, cacutus, herbe, rocher, etc.) ont été entièrement dessinés par notre équipe, et sont donc libres de droit.
+Les éléments graphiques présents dans le jeu (mouton, loup, cacutus, herbe, rocher, etc.) ont été entièrement dessinés par notre équipe, et sont donc libres de droit.
 
 Ce projet à été réalisé dans le cadre d'un projet universitaire 2025 en BUT Informatique. Tout droit réservés à l'Université Polytechnique des Hauts-de-France, IUT de Maubeuge.
